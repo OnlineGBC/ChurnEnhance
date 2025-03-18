@@ -53,7 +53,6 @@ Thumbs.db
 # (Optional) If you have a local config, exclude it as well:
 .streamlit/config.toml
 
-# ------------------------------------------------------------------------------
-# Jupyter notebooks (if used alongside Streamlit)
-# ------------------------------------------------------------------------------
-.ipynb_checkpoints/
+certs/*
+temp_uploaded_files/*
+
