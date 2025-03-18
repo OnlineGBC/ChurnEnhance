@@ -1,20 +1,59 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# CustomerChurn
+Calculate Customer Churn
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+# Before starting run these installs:
+#  pip install openai-whisper
+#  sudo apt-get update and sudo apt-get install ffmpeg
+#  tested on python3.12
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+sudo apt install python-is-python3
+sudo apt update
+pip install openpyxl
+pip install streamlit-autorefresh
+pip install extract-msg
+sudo apt-get install tesseract-ocr
+sudo apt install python3-pip
+sudo apt install python3.12-venv
+python3 -m venv CustomerChurn
+source CustomerChurn/bin/activate
+pip install streamlit
+# sudo setcap 'cap_net_bind_service=+ep' /usr/bin/python3.12
+#       Not used setcap here because we used port 8443 ~/CustomerChurn/streamlit/config.toml  
+# (as noted above, since it was tested on python3.12.  If needed, use another version but test as needed)
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Run in foreground:  streamlit run app.py
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+To Run in background:
+sudo apt-get update
+sudo apt-get install supervisor
+
+sudo nano /etc/supervisor/conf.d/CustomerChurn.conf
+Contents:
+    [program:CustomerChurn]
+    # command=STREAMLIT_CONFIG_FILE=/home/developer/CustomerChurn/.streamlit/config.toml /home/developer/CustomerChurn/CustomerChurn/bin/streamlit run /home/developer/CustomerChurn/app.py
+    command=/bin/sh -c 'STREAMLIT_CONFIG_FILE=/home/developer/CustomerChurn/.streamlit/config.toml /home/developer/CustomerChurn/CustomerChurn/bin/streamlit run /home/developer/CustomerChurn/app.py'
+    directory=/home/developer/CustomerChurn
+    user=developer
+    autostart=true
+    autorestart=true
+    redirect_stderr=true
+    stdout_logfile=/var/log/supervisor/CustomerChurn.log
+    stderr_logfile=/var/log/supervisor/CustomerChurn_err.log
+
+Next give these commands:
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl status
+
+Checking logs:
+tail -f /var/log/supervisor/streamlit.log
+tail -f /var/log/supervisor/streamlit_err.log
+
+Stop/Start process:
+sudo supervisorctl stop CustomerChurn
+sudo supervisorctl start CustomerChurn
+sudo supervisorctl restart CustomerChurn
+sudo supervisorctl status CustomerChurn
+
+
+
