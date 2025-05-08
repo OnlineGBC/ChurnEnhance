@@ -7,7 +7,7 @@ from SalesFlag import show_sales_flag
 from ProductFlag import show_product_flag
 
 # Set page title and wide layout
-st.set_page_config(page_title="Customer Buying Behavior", layout="wide")
+st.set_page_config(page_title="FP&A Customer Sales Churn", layout="wide")
 
 # -- Custom CSS --------------------------------------------------------------
 # Only the selectors that actually work are injected here
@@ -66,6 +66,10 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# -- Logo --------------------------------------------------------------
+# Display the company logo at the top of the page
+st.image("Laborie.png", width=200)
+
 # -- Sidebar Controls --------------------------------------------------------
 st.sidebar.header("🔧 Controls")
 
@@ -94,7 +98,7 @@ if st.sidebar.button("Apply Thresholds"):
 
 # Main page title (now via markdown so we can apply our .main-title style)
 st.markdown(
-    '<h1 class="main-title">✅ Customer Buying Behavior Processor</h1>',
+    '<h1 class="main-title">✅ FP&A Customer Sales Churn</h1>',
     unsafe_allow_html=True
 )
 
@@ -108,7 +112,7 @@ if uploaded_file:
     # Section: show invalid customer rows
     # custom header with a unique class so we can style it directly
     st.markdown(
-        '<h2 class="cust-not-found">😟 Customer Information Not Found</h2>',
+        '<h3 class="cust-not-found">😟 Customers Not Found</h3>',
         unsafe_allow_html=True
     )
 
@@ -137,7 +141,7 @@ if uploaded_file:
 
     # Top-level tabs for two analyses
     tab_sales, tab_product = st.tabs(
-        ["🛒 Sales Inactivity", "📦 Product Inactivity"]
+        ["🛒 Phase 1:  Sales Inactivity", "📦 Phase 2:  Product Inactivity"]
     )
 
     # Sales inactivity analysis
