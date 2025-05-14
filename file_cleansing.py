@@ -13,7 +13,7 @@ st.set_page_config(page_title="FP&A Customer Sales Churn", layout="wide")
 # Only the selectors that actually work are injected here
 st.markdown("""
 <style>
-  /* 0) Global: force every element—main, sidebar, widgets—to use sans‑serif */
+  /* 0) Global: force every element—main, sidebar, widgets—to use sans-serif */
   html, body, * {
     font-family: sans-serif !important;
   }
@@ -21,7 +21,7 @@ st.markdown("""
   h1 {
     color: #FAF3E0 !important;
   }
-  /* 2) File‑uploader instructions ("Drag and drop file here" & "Limit 200MB per file • CSV") */
+  /* 2) File-uploader instructions ("Drag and drop file here" & "Limit 200MB per file • CSV") */
   [data-testid="stFileUploaderDropzoneInstructions"] span,
   [data-testid="stFileUploaderDropzoneInstructions"] small {
     color: #FAF3E0 !important;
@@ -39,17 +39,17 @@ st.markdown("""
   [data-testid="stDownloadButton"] p {
     color: #FAF3E0 !important;
   }
-  /* 6) Style only the “Customer Information Not Found” heading */
+  /* 6) Style only the “Customers Not Found” heading */
   .cust-not-found {
     color: #FAF3E0 !important;
     font-family: Arial, sans-serif !important;
-    margin-top: 1rem;   /* match default st.header spacing */
+    margin-top: 1rem;
   }
   /* 7) Custom main page title override */
   .main-title {
     color: #FAF3E0 !important;
     font-family: Arial, sans-serif !important;
-    margin-bottom: 1rem; /* match default st.title spacing */
+    margin-bottom: 1rem;
   }
   /* 8) Valid Customers header */
   .valid-customers {
@@ -78,10 +78,12 @@ uploaded_file = st.sidebar.file_uploader("Choose a CSV file", type=["csv"])
 
 # Sidebar inputs for churn thresholds
 yellow_flag = st.sidebar.number_input(
-    "Yellow Flag (days ≥ 30)", min_value=30, value=30, step=1
+    "Yellow Flag (days ≥ 30)",
+    min_value=30, value=30, step=1
 )
 red_flag = st.sidebar.number_input(
-    "Red Flag (days ≥ 60)", min_value=60, value=60, step=1
+    "Red Flag (days ≥ 60)",
+    min_value=60, value=60, step=1
 )
 
 # No-op callback for download buttons
@@ -96,7 +98,7 @@ if st.sidebar.button("Apply Thresholds"):
 
 # -- Main App ---------------------------------------------------------------
 
-# Main page title (now via markdown so we can apply our .main-title style)
+# Main page title (via markdown so we can style with .main-title)
 st.markdown(
     '<h1 class="main-title">✅ FP&A Customer Sales Churn</h1>',
     unsafe_allow_html=True
@@ -106,16 +108,14 @@ if uploaded_file:
     # Read uploaded CSV
     df_orig = pd.read_csv(uploaded_file, low_memory=False)
 
-    # Run cleaning and matching routines
-    df_full, df_not_found, df_valid = run_cust_clean(df_orig)
+    # Run cleaning and matching routines (now returns 4 DataFrames)
+    df_full, df_not_found, df_valid, df_valid_cust_prod = run_cust_clean(df_orig)
 
     # Section: show invalid customer rows
-    # custom header with a unique class so we can style it directly
     st.markdown(
         '<h3 class="cust-not-found">😟 Customers Not Found</h3>',
         unsafe_allow_html=True
     )
-
     st.download_button(
         label="Download CustIdentifierNotFound.csv",
         data=df_not_found.to_csv(index=False).encode("utf-8"),
@@ -125,7 +125,7 @@ if uploaded_file:
     )
     st.markdown("---")
 
-    # Section: show valid customer rows (custom class for styling)
+    # Section: show valid customer rows
     st.markdown(
         '<h2 class="valid-customers">✅ Valid Customers</h2>',
         unsafe_allow_html=True
@@ -150,4 +150,5 @@ if uploaded_file:
 
     # Product inactivity analysis
     with tab_product:
-        show_product_flag(df_full, df_valid, noop)
+        # pass along the new df_valid_cust_prod for any product-flag logic
+        show_product_flag(df_full, df_valid, df_valid_cust_prod, noop)

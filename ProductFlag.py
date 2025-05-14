@@ -1,22 +1,25 @@
-# ProductFlag.py
-
 import streamlit as st
 import pandas as pd
-from dateutil.relativedelta import relativedelta
+from dateutil.relativedelta import relativedelta  # <– can remove relativedelta import now
 
-def show_product_flag(df_full: pd.DataFrame, df_valid: pd.DataFrame, noop):
+def show_product_flag(
+    df_full: pd.DataFrame,
+    df_valid: pd.DataFrame,
+    df_valid_cust_prod: pd.DataFrame,
+    noop
+):
     """
     Display the Product Inactivity section, identifying 'lost' customers
-    based on a rolling-month threshold, excluding any invalid customers.
+    based on your existing day‐based inactivity thresholds.
     """
 
-    # Custom styled header for Product Inactivity
+    # Custom styled header
     st.markdown(
         '<h2 style="color:#FAF3E0">📦 Product Inactivity</h2>',
         unsafe_allow_html=True
     )
 
-    # 1) Determine which date column to use
+    # 1) Pick date column
     if "TA_Date" in df_full.columns:
         date_col = "TA_Date"
     elif "transactiondate" in df_full.columns:
@@ -25,46 +28,39 @@ def show_product_flag(df_full: pd.DataFrame, df_valid: pd.DataFrame, noop):
         st.warning("Missing date column ('TA_Date' or 'transactiondate') for product inactivity.")
         return
 
-    # 2) Threshold input
-    selected_lost_months = st.number_input(
-        "Lost threshold (months)", min_value=1, value=3, step=1
-    )
+    # 2) Pull your existing day‐based thresholds
+    yellow_flag = st.session_state.get("yellow")
+    red_flag    = st.session_state.get("red")
+    if yellow_flag is None or red_flag is None:
+        st.warning("Please set Yellow/Red flags in the sidebar and click 'Apply Thresholds' first.")
+        return
 
-    # 3) Filter out bad customer IDs
-    valid_ids = set(df_valid["customer_no"])
-    df_full = df_full[df_full["st_customer_no"].isin(valid_ids)].copy()
+    st.write(f"Using inactivity thresholds: **Yellow ≥ {yellow_flag} days**, **Red > {red_flag} days**")
 
-    # 4) Ensure we have datetime
+    # 3) Filter only valid‐customer history
+    valid_ids = set(df_valid["customer_no_dupes"])
+    df_full  = df_full[df_full["st_customer_no"].isin(valid_ids)].copy()
+
+    # 4) Ensure datetime
     df_full.loc[:, date_col] = pd.to_datetime(df_full[date_col], errors="coerce")
 
-    # 5) Determine current‐month start
-    max_date = df_full[date_col].max()
-    if pd.isna(max_date):
-        st.warning("No transaction dates found.")
-        return
-    current_month_start = max_date.replace(day=1)
+    # 5) Last transaction per customer
+    idx_max = df_full.groupby("st_customer_no")[date_col].idxmax()
+    df_last = df_full.loc[idx_max].copy()
 
-    # 6) Compute cutoff date
-    lost_cutoff = current_month_start - relativedelta(months=selected_lost_months)
+    # 6) Compute days inactive
+    today = pd.Timestamp.today()
+    df_last.loc[:, "days_inactive"] = (
+        today - df_last[date_col]
+    ).apply(lambda x: x.days if pd.notnull(x) else None)
 
-    # 7) Identify past vs. recent customers
-    past_customers = set(
-        df_full.loc[df_full[date_col] < current_month_start, "st_customer_no"].unique()
-    )
-    recent_customers = set(
-        df_full.loc[df_full[date_col] >= lost_cutoff, "st_customer_no"].unique()
-    )
+    # 7) Lost customers = days_inactive > red_flag
+    lost = df_last[df_last["days_inactive"] > red_flag]
+    lost_count = lost.shape[0]
 
-    # 8) Lost customers = in past but not in recent
-    lost_customers = past_customers - recent_customers
-    lost_count = len(lost_customers)
+    # 8) Display lost count
+    st.metric(f"Customers with > {red_flag} days since last purchase", lost_count)
 
-    # 9) Display result
-    st.metric("Lost Customers Count", lost_count)
-
-    # 10) Optional details
+    # 9) Optional: show full rows
     if st.checkbox("Show lost customer details"):
-        df_lost = df_full[df_full["st_customer_no"].isin(lost_customers)]
-        st.dataframe(df_lost)
-
-    # noop remains available for any future download buttons
+        st.dataframe(lost.reset_index(drop=True))
