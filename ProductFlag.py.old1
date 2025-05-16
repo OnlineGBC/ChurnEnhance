@@ -1,7 +1,7 @@
-# SalesFlag.py
+# ProductFlag.py
 
 """
-SalesFlag.py provides Streamlit UI functionality for analyzing customer sales inactivity (churn analysis).
+ProductFlag.py provides Streamlit UI functionality for analyzing customer sales inactivity (churn analysis).
 
 Functions provided in this script:
 - sorted_csv_by_inactivity: Sorts customer data based on the 'sales_inactivity' column in descending order,

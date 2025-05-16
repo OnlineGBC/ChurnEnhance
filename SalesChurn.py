@@ -7,8 +7,8 @@ def flag_churn(df_valid: pd.DataFrame, today: pd.Timestamp, yellow_flag: int, re
     Compute last transaction per customer, sales_inactivity, and split into yellow/red.
     Returns: (df_last_txn, df_yellow, df_red)
     """
-    # Identify last transaction per customer
-    idx_max = df_valid.groupby(['customer_no_dupes', 'bill_to_custname_wo_dupes'])['transactiondate'].idxmax()
+    # Identify last transaction per customer (group only by customer_no_dupes)
+    idx_max = df_valid.groupby(['customer_no_dupes'])['transactiondate'].idxmax()
     df_last_txn = df_valid.loc[idx_max].copy()
 
     # Ensure transactiondate is datetime

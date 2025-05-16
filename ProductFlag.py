@@ -1,6 +1,24 @@
+# ProductFlag.py
+
+"""
+ProductFlag.py provides Streamlit UI functionality for analyzing customer
+“product inactivity” (i.e. identifying “lost” customers based on a
+rolling-month threshold, excluding any invalid customers).
+
+Functions provided:
+- show_product_flag: renders the Product Inactivity tab, taking:
+    • df_full: the full transactions history DataFrame
+    • df_valid: the filtered “valid customers” DataFrame
+    • df_valid_cust_prod: placeholder DataFrame of valid customer+product combos
+    • noop: a no-op callback (for download buttons, if needed)
+
+This module is called by file_cleansing.py and does not call other scripts
+except for the dateutil.relativedelta helper.
+"""
+
 import streamlit as st
 import pandas as pd
-from dateutil.relativedelta import relativedelta  # <– can remove relativedelta import now
+from dateutil.relativedelta import relativedelta
 
 def show_product_flag(
     df_full: pd.DataFrame,
@@ -10,57 +28,61 @@ def show_product_flag(
 ):
     """
     Display the Product Inactivity section, identifying 'lost' customers
-    based on your existing day‐based inactivity thresholds.
+    based on a rolling-month threshold, excluding any invalid customers.
     """
 
-    # Custom styled header
+    # Section header
     st.markdown(
         '<h2 style="color:#FAF3E0">📦 Product Inactivity</h2>',
         unsafe_allow_html=True
     )
 
-    # 1) Pick date column
+    # 1) Pick the date column
     if "TA_Date" in df_full.columns:
         date_col = "TA_Date"
     elif "transactiondate" in df_full.columns:
         date_col = "transactiondate"
     else:
-        st.warning("Missing date column ('TA_Date' or 'transactiondate') for product inactivity.")
+        st.warning(
+            "Missing date column ('TA_Date' or 'transactiondate') for product inactivity."
+        )
         return
 
-    # 2) Pull your existing day‐based thresholds
-    yellow_flag = st.session_state.get("yellow")
-    red_flag    = st.session_state.get("red")
-    if yellow_flag is None or red_flag is None:
-        st.warning("Please set Yellow/Red flags in the sidebar and click 'Apply Thresholds' first.")
-        return
+    # 2) How many months back to consider “lost”?
+    selected_lost_months = st.number_input(
+        "Lost threshold (months)", min_value=1, value=3, step=1
+    )
 
-    st.write(f"Using inactivity thresholds: **Yellow ≥ {yellow_flag} days**, **Red > {red_flag} days**")
+    # 3) Drop any IDs that weren’t “valid customers”
+    valid_ids = set(df_valid["customer_no"])
+    df_full = df_full[df_full["st_customer_no"].isin(valid_ids)].copy()
 
-    # 3) Filter only valid‐customer history
-    valid_ids = set(df_valid["customer_no_dupes"])
-    df_full  = df_full[df_full["st_customer_no"].isin(valid_ids)].copy()
-
-    # 4) Ensure datetime
+    # 4) Ensure our date column is datetime
     df_full.loc[:, date_col] = pd.to_datetime(df_full[date_col], errors="coerce")
 
-    # 5) Last transaction per customer
-    idx_max = df_full.groupby("st_customer_no")[date_col].idxmax()
-    df_last = df_full.loc[idx_max].copy()
+    # 5) Find the start of the “current” month
+    max_date = df_full[date_col].max()
+    if pd.isna(max_date):
+        st.warning("No transaction dates found.")
+        return
+    current_month_start = max_date.replace(day=1)
 
-    # 6) Compute days inactive
-    today = pd.Timestamp.today()
-    df_last.loc[:, "days_inactive"] = (
-        today - df_last[date_col]
-    ).apply(lambda x: x.days if pd.notnull(x) else None)
+    # 6) Compute cutoff date
+    lost_cutoff = current_month_start - relativedelta(months=selected_lost_months)
 
-    # 7) Lost customers = days_inactive > red_flag
-    lost = df_last[df_last["days_inactive"] > red_flag]
-    lost_count = lost.shape[0]
+    # 7) Identify past vs. recent customers
+    past_customers = set(
+        df_full.loc[df_full[date_col] < current_month_start, "st_customer_no"].unique()
+    )
+    recent_customers = set(
+        df_full.loc[df_full[date_col] >= lost_cutoff, "st_customer_no"].unique()
+    )
 
-    # 8) Display lost count
-    st.metric(f"Customers with > {red_flag} days since last purchase", lost_count)
+    # 8) Those in past but not recent are “lost”
+    lost_customers = past_customers - recent_customers
+    lost_count = len(lost_customers)
 
-    # 9) Optional: show full rows
-    if st.checkbox("Show lost customer details"):
-        st.dataframe(lost.reset_index(drop=True))
+    # 9) Display the count
+    st.metric("Lost Customers Count", lost_count)
+
+    # noop remains available for any future CSV download buttons
