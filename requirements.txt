@@ -1,22 +1,3 @@
-python-dotenv
-openai
-python-pptx
-python-docx
-PyPDF2
 streamlit
-openai-whisper
-pytesseract
-pillow
 pandas
-beautifulsoup4
-openpyxl
-yt-dlp >= 2024.3.10
-matplotlib
-
-
-
-
-
-
-
 
