@@ -13,7 +13,7 @@ The system is built on **Flask + Tailwind CSS** (migrated from Streamlit v1) wit
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    Flask Web App                         │
-│                  (port 8503)                             │
+│                  (port 8513)                             │
 │  ┌─────────┐ ┌───────────┐ ┌───────────┐ ┌──────────┐ │
 │  │Dashboard│ │Sales/Prod │ │Retention  │ │Market    │  │
 │  │  Index  │ │  Flags    │ │ Dashboard │ │Access    │  │
@@ -247,7 +247,7 @@ API keys are stored in `.env` and loaded via `python-dotenv`.
 ```
 /home/azureuser/CustomerChurn/
 │
-├── app.py                          # Flask entry point (port 8503)
+├── app.py                          # Flask entry point (port 8513)
 ├── wsgi.py                         # WSGI entry for gunicorn
 ├── requirements.txt                # Python dependencies
 ├── .env                            # API keys + DB config (gitignored)
@@ -504,13 +504,13 @@ python -m services.data_loader
 
 ```bash
 python app.py
-# Runs on http://localhost:8503
+# Runs on http://localhost:8513
 ```
 
 ### Production (gunicorn)
 
 ```bash
-gunicorn wsgi:app -b 0.0.0.0:8503
+gunicorn wsgi:app -b 0.0.0.0:8513
 ```
 
 ---
@@ -536,7 +536,7 @@ gunicorn wsgi:app -b 0.0.0.0:8503
 
 1. PostgreSQL tables exist (9 tables) — `\dt` in psql
 2. Data loaded: 2,135 customers, 26,597 transactions
-3. Flask app starts on port 8503 — all pages render with Tailwind
+3. Flask app starts on port 8513 — all pages render with Tailwind
 4. Upload CSV via `/upload` — cleaning + flag logic works
 5. Sales Flags (`/flags/sales`) — yellow/red thresholds applied correctly
 6. Product Flags (`/flags/product`) — customer-product level flags
