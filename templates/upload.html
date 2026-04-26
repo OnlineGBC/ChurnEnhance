@@ -58,17 +58,6 @@
         </form>
     </div>
 
-    <!-- Reload enriched data -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Reload Enriched Master Dataset</h2>
-        <p class="text-sm text-gray-500 mb-4">Re-import the enriched CSV (CustomerChurn_Enriched_Master.csv) into the database.</p>
-        <form method="POST" action="/reload-enriched">
-            <button type="submit" class="bg-gray-600 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors">
-                Reload Enriched Data
-            </button>
-        </form>
-    </div>
-
     <!-- Results -->
     {% if results %}
     <div class="mt-6 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
