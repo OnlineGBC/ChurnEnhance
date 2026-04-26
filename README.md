@@ -456,16 +456,9 @@ API keys are stored in `.env` and loaded via `python-dotenv`.
 │   ├── js/chat.js                  # Chat UI fetch logic
 │   └── img/GBC-ai4org.jpg             # Company logo
 │
-├── files/
-│   ├── CustomerChurn_Enriched_Master.csv  # Enriched dataset (102 cols, 26,597 rows)
-│   └── uploads/                    # User CSV uploads (gitignored)
-│
-└── legacy/                         # Original Streamlit v1 files (preserved)
-    ├── file_cleansing.py
-    ├── CustClean.py
-    ├── SalesFlag.py
-    ├── SalesChurn.py
-    └── ProductFlag.py
+└── files/
+    ├── CustomerChurn_Enriched_Master.csv  # Enriched dataset (102 cols, 26,597 rows)
+    └── uploads/                    # User CSV uploads (gitignored)
 ```
 
 ---

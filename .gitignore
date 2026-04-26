@@ -135,6 +135,11 @@ frontend/cypress/snapshots/linux/1x
 !.vscode/extensions.json
 !.vscode/launch.json
 
+########################################################################
+# Claude Code
+########################################################################
+.claude/
+
 .swc/
 
 # Performance suite output
