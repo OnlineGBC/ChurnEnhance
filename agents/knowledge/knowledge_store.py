@@ -107,24 +107,40 @@ class KnowledgeStore:
             db.close()
 
     @staticmethod
-    def save_agent_run(crew: str, llm_model: str, status: str,
-                       input_summary: str, output_summary: str,
-                       tokens_used: int, started_at: datetime, completed_at: datetime = None):
+    def start_agent_run(crew: str, llm_model: str, input_summary: str = "") -> int:
+        """Insert a row with status='running' and return its id."""
         db = get_db_session()
         try:
             run = AgentRun(
                 crew=crew,
                 llm_model=llm_model,
-                status=status,
+                status="running",
                 input_summary=input_summary,
-                output_summary=output_summary,
-                tokens_used=tokens_used,
-                started_at=started_at,
-                completed_at=completed_at or datetime.now(),
+                output_summary="",
+                tokens_used=0,
+                started_at=datetime.now(),
+                completed_at=None,
             )
             db.add(run)
             db.commit()
             return run.id
+        finally:
+            db.close()
+
+    @staticmethod
+    def complete_agent_run(run_id: int, status: str, output_summary: str = "",
+                           tokens_used: int = 0):
+        """Mark an existing run row as completed/failed."""
+        db = get_db_session()
+        try:
+            run = db.query(AgentRun).filter(AgentRun.id == run_id).first()
+            if run is None:
+                return
+            run.status = status
+            run.output_summary = output_summary
+            run.tokens_used = tokens_used
+            run.completed_at = datetime.now()
+            db.commit()
         finally:
             db.close()
 

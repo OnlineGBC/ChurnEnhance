@@ -2,7 +2,6 @@
 
 import models  # noqa: F401 — register all ORM models for FK resolution
 import logging
-from datetime import datetime
 from agents.llm_config import get_llm
 from agents.retention.churn_risk import score_churn_risk
 from agents.retention.diagnosis import diagnose_churn
@@ -22,7 +21,6 @@ def run_retention_crew(llm_model: str) -> dict:
     4. Persist results to PostgreSQL
     5. Send feedback to market access crew
     """
-    started_at = datetime.now()
     llm = get_llm(llm_model)
 
     # Step 1: Churn Risk Scoring
@@ -91,20 +89,6 @@ def run_retention_crew(llm_model: str) -> dict:
         retention_to_market_access()
     except Exception as e:
         logger.error(f"Feedback loop error: {e}")
-
-    # Step 5: Log agent run
-    try:
-        KnowledgeStore.save_agent_run(
-            crew="retention",
-            llm_model=llm_model,
-            status="completed",
-            input_summary=f"Analyzed {len(churn_scores)} customers",
-            output_summary=f"{scores_saved} scores, {diag_saved} diagnoses, {intv_saved} interventions saved",
-            tokens_used=0,
-            started_at=started_at,
-        )
-    except Exception as e:
-        logger.error(f"Failed to save agent run: {e}")
 
     return {
         "churn_scores": scores_saved,

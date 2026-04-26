@@ -1,7 +1,6 @@
 """Market Access crew — full pipeline execution."""
 
 import models  # noqa: F401 — register all ORM models for FK resolution
-from datetime import datetime
 from agents.llm_config import get_llm
 from agents.market_access.market_intel import analyze_market_intel
 from agents.market_access.icp import build_icp_profiles
@@ -22,7 +21,6 @@ def run_market_access_crew(llm_model: str) -> dict:
     5. Plan campaigns
     6. Persist results and send feedback
     """
-    started_at = datetime.now()
     llm = get_llm(llm_model)
 
     # Step 1: Market Intelligence
@@ -57,20 +55,6 @@ def run_market_access_crew(llm_model: str) -> dict:
         market_access_to_retention()
     except Exception:
         pass
-
-    # Log agent run
-    KnowledgeStore.save_agent_run(
-        crew="market_access",
-        llm_model=llm_model,
-        status="completed",
-        input_summary="Full market access analysis",
-        output_summary=(
-            f"{len(icp_profiles)} ICP profiles, {len(lead_scores)} lead scores, "
-            f"{len(campaigns)} campaigns"
-        ),
-        tokens_used=0,
-        started_at=started_at,
-    )
 
     return {
         "market_intel": market_intel,

@@ -78,6 +78,10 @@
                     Chat
                 </a>
             </nav>
+            <div id="active-runs-badge" class="hidden mx-4 mb-2 px-3 py-2 rounded-lg bg-amber-500/20 border border-amber-400/40 text-xs font-medium text-amber-100 flex items-center gap-2">
+                <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" stroke-opacity="0.3"/><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                <span id="active-runs-text">Running…</span>
+            </div>
             <div class="p-4 border-t border-white/20">
                 <span class="text-sm font-medium text-white/70">Agentic Retention & Growth Platform</span>
             </div>
@@ -122,6 +126,32 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script>
+        (function pollActiveRuns() {
+            const badge = document.getElementById('active-runs-badge');
+            const text = document.getElementById('active-runs-text');
+            if (!badge) return;
+            const crewLabel = (c) => c === 'market_access' ? 'Market Access' : (c === 'retention' ? 'Retention' : c);
+            async function tick() {
+                try {
+                    const r = await fetch('/api/runs/active', { cache: 'no-store' });
+                    if (!r.ok) return;
+                    const runs = await r.json();
+                    if (runs.length === 0) {
+                        badge.classList.add('hidden');
+                    } else {
+                        const labels = runs.map(x => crewLabel(x.crew)).join(', ');
+                        text.textContent = runs.length === 1
+                            ? `Running: ${labels}`
+                            : `Running ${runs.length}: ${labels}`;
+                        badge.classList.remove('hidden');
+                    }
+                } catch (e) { /* network blip — keep current state */ }
+            }
+            tick();
+            setInterval(tick, 5000);
+        })();
+    </script>
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>
