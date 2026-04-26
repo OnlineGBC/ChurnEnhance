@@ -12,6 +12,7 @@ STALE_RUN_MINUTES = 10
 @api_bp.route("/retention/run", methods=["POST"])
 def run_retention():
     llm_model = session.get("llm_model", Config.DEFAULT_LLM)
+    KnowledgeStore.reset_retention_outputs()
     run_id = KnowledgeStore.start_agent_run(
         crew="retention", llm_model=llm_model,
         input_summary="Top 50 customers by churn risk",
@@ -35,6 +36,7 @@ def run_retention():
 @api_bp.route("/market-access/run", methods=["POST"])
 def run_market_access():
     llm_model = session.get("llm_model", Config.DEFAULT_LLM)
+    KnowledgeStore.reset_market_access_outputs()
     run_id = KnowledgeStore.start_agent_run(
         crew="market_access", llm_model=llm_model,
         input_summary="Full market access analysis",

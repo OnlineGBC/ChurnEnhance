@@ -107,6 +107,29 @@ class KnowledgeStore:
             db.close()
 
     @staticmethod
+    def reset_retention_outputs():
+        """Wipe prior retention crew outputs so each run starts clean."""
+        db = get_db_session()
+        try:
+            db.query(Intervention).delete()
+            db.query(Diagnosis).delete()
+            db.query(ChurnScore).delete()
+            db.commit()
+        finally:
+            db.close()
+
+    @staticmethod
+    def reset_market_access_outputs():
+        """Wipe prior market access crew outputs so each run starts clean."""
+        db = get_db_session()
+        try:
+            db.query(LeadScore).delete()
+            db.query(ICPProfile).delete()
+            db.commit()
+        finally:
+            db.close()
+
+    @staticmethod
     def start_agent_run(crew: str, llm_model: str, input_summary: str = "") -> int:
         """Insert a row with status='running' and return its id."""
         db = get_db_session()
