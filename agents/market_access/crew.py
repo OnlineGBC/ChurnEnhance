@@ -1,5 +1,6 @@
 """Market Access crew — full pipeline execution."""
 
+import models  # noqa: F401 — register all ORM models for FK resolution
 from datetime import datetime
 from agents.llm_config import get_llm
 from agents.market_access.market_intel import analyze_market_intel

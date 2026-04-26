@@ -1,5 +1,6 @@
 """Top-level orchestrator — routes queries to appropriate crew."""
 
+import models  # noqa: F401 — register all ORM models for FK resolution
 import json
 from agents.llm_config import get_llm
 from agents.knowledge.data_access import DataAccessLayer

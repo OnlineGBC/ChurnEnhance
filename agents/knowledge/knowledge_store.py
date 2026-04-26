@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from models.database import get_db_session
+import models  # noqa: F401 — register all ORM models for FK resolution
 from models.agent_models import ChurnScore, Diagnosis, Intervention, ICPProfile, LeadScore, AgentRun, FeedbackLoop
 
 

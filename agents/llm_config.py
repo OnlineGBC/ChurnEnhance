@@ -21,7 +21,7 @@ def get_llm(choice: str = None):
             model=model_id,
             api_key=Config.OPENAI_API_KEY,
             temperature=0.1,
-            max_tokens=4096,
+            max_tokens=16384,
         )
     elif provider == "anthropic":
         from langchain_anthropic import ChatAnthropic
@@ -29,7 +29,7 @@ def get_llm(choice: str = None):
             model=model_id,
             api_key=Config.ANTHROPIC_API_KEY,
             temperature=0.1,
-            max_tokens=4096,
+            max_tokens=16384,
         )
     else:
         raise ValueError(f"Unknown provider: {provider}")

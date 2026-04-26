@@ -1,5 +1,7 @@
 """Retention Specialist crew — LangGraph subgraph wiring."""
 
+import models  # noqa: F401 — register all ORM models for FK resolution
+import logging
 from datetime import datetime
 from agents.llm_config import get_llm
 from agents.retention.churn_risk import score_churn_risk
@@ -7,6 +9,8 @@ from agents.retention.diagnosis import diagnose_churn
 from agents.retention.intervention import select_interventions
 from agents.knowledge.knowledge_store import KnowledgeStore
 from agents.knowledge.feedback_loop import retention_to_market_access
+
+logger = logging.getLogger(__name__)
 
 
 def run_retention_crew(llm_model: str) -> dict:
@@ -23,8 +27,10 @@ def run_retention_crew(llm_model: str) -> dict:
 
     # Step 1: Churn Risk Scoring
     churn_scores = score_churn_risk(llm, top_n=50)
+    logger.info(f"Churn risk scoring returned {len(churn_scores)} scores")
 
     # Persist churn scores
+    scores_saved = 0
     for score in churn_scores:
         try:
             KnowledgeStore.save_churn_score(
@@ -35,12 +41,16 @@ def run_retention_crew(llm_model: str) -> dict:
                 recommended_action=score.get("recommended_action", ""),
                 llm_model=llm_model,
             )
-        except Exception:
+            scores_saved += 1
+        except Exception as e:
+            logger.error(f"Failed to save churn score for {score.get('customer_no')}: {e}")
             continue
 
     # Step 2: Diagnosis
     diagnoses = diagnose_churn(llm, churn_scores)
+    logger.info(f"Diagnosis returned {len(diagnoses)} diagnoses")
 
+    diag_saved = 0
     for diag in diagnoses:
         try:
             KnowledgeStore.save_diagnosis(
@@ -51,12 +61,16 @@ def run_retention_crew(llm_model: str) -> dict:
                 suggested_interventions=diag.get("suggested_interventions", []),
                 llm_model=llm_model,
             )
-        except Exception:
+            diag_saved += 1
+        except Exception as e:
+            logger.error(f"Failed to save diagnosis for {diag.get('customer_no')}: {e}")
             continue
 
     # Step 3: Intervention Selection
     interventions = select_interventions(llm, diagnoses)
+    logger.info(f"Intervention selection returned {len(interventions)} interventions")
 
+    intv_saved = 0
     for intv in interventions:
         try:
             KnowledgeStore.save_intervention(
@@ -67,28 +81,33 @@ def run_retention_crew(llm_model: str) -> dict:
                 assigned_to=intv.get("assigned_to", ""),
                 llm_model=llm_model,
             )
-        except Exception:
+            intv_saved += 1
+        except Exception as e:
+            logger.error(f"Failed to save intervention for {intv.get('customer_no')}: {e}")
             continue
 
     # Step 4: Cross-crew feedback
     try:
         retention_to_market_access()
-    except Exception:
-        pass
+    except Exception as e:
+        logger.error(f"Feedback loop error: {e}")
 
     # Step 5: Log agent run
-    KnowledgeStore.save_agent_run(
-        crew="retention",
-        llm_model=llm_model,
-        status="completed",
-        input_summary=f"Analyzed {len(churn_scores)} customers",
-        output_summary=f"{len(churn_scores)} scores, {len(diagnoses)} diagnoses, {len(interventions)} interventions",
-        tokens_used=0,
-        started_at=started_at,
-    )
+    try:
+        KnowledgeStore.save_agent_run(
+            crew="retention",
+            llm_model=llm_model,
+            status="completed",
+            input_summary=f"Analyzed {len(churn_scores)} customers",
+            output_summary=f"{scores_saved} scores, {diag_saved} diagnoses, {intv_saved} interventions saved",
+            tokens_used=0,
+            started_at=started_at,
+        )
+    except Exception as e:
+        logger.error(f"Failed to save agent run: {e}")
 
     return {
-        "churn_scores": len(churn_scores),
-        "diagnoses": len(diagnoses),
-        "interventions": len(interventions),
+        "churn_scores": scores_saved,
+        "diagnoses": diag_saved,
+        "interventions": intv_saved,
     }
