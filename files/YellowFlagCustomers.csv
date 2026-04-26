@@ -1,0 +1,144 @@
+transactiondate,product,product_GBU,yearmth,customer_no,bill_to_customer_name,Extract_Number,customer_no_dupes,bill_to_custname_wo_dupes,st_customer_name,st_customer_no,invoice_no,invoice_type,revenue,cost,Quantity,sale_amount,Profit-Loss,sales_inactivity
+03/16/2025,Ph/Impedance Catheters,GI,202301,1059073,Teprel Equipamento Medicos,,1059073,Teprel Equipamento Medicos,,20154543.0,90378467,Invoice,5156.12,942.42,50.0,257806.0,256863.58,89
+03/16/2025,Other Uro Dx Equipment,Uro,202301,1078718,Healthcare Materials Management Services,,1078718,Healthcare Materials Management Services,,20166113.0,90378519,Invoice,134.06,19.74,1.0,134.06,114.32,89
+03/16/2025,babyLance,CI,202301,1078703,"Distribution Cooperative, Inc.",,1078703,"Distribution Cooperative, Inc.",,20162912.0,90378509,Invoice,1560.0,780.0,2000.0,3120000.0,3119220.0,89
+03/16/2025,T-Doc Catheters,Uro,202301,1070228,Radboud Umc 205 Crediteurenadministratie,,1070228,Radboud Umc 205 Crediteurenadministratie,,20150936.0,90378470,Invoice,1083.65,172.63,50.0,54182.5,54009.87,89
+03/16/2025,ROM,CI,202301,1078657,HCA Rio Grande Regional Hospital,,1078657,HCA Rio Grande Regional Hospital,,20170409.0,90378502,Invoice,15250.0,2705.0,500.0,7625000.0,7622295.0,89
+03/16/2025,Flowmaster,Uro,202301,1069376,Urovision F.H. Uro,,1069376,Urovision F.H. Uro,,1059021.0,90378463,Invoice,0.0,0.0,0.0,0.0,0.0,89
+03/16/2025,Tubing,Uro,202301,1059512,"NÖ LGA, p.a. UK Wr. Neustadt FIBU",,1059512,"NÖ LGA, p.a. UK Wr. Neustadt FIBU",,20153339.0,90378493,Invoice,0.0,153.2,0.0,0.0,-153.2,89
+03/16/2025,InjeTAK,Uro,202301,1078661,Alberta Health Service,,1078661,Alberta Health Service,,20162376.0,90378516,Invoice,226.42,47.78,4.0,905.68,857.9,89
+03/16/2025,Ph/Impedance Catheters,GI,202301,1069667,EB Neuro  S.p.A.,,1069667,EB Neuro  S.p.A.,,20156439.0,90378456,Invoice,661.15,188.48,10.0,6611.5,6423.02,89
+03/17/2025,Optilume Strictures,Uro,202301,1019036,Columbus Reg Healthcare System,,1019036,Columbus Reg Healthcare System,,20164176.0,90378534,Invoice,2095.0,0.0,1.0,2095.0,2095.0,88
+03/17/2025,Optilume Strictures,Uro,202301,1019007,Baxter Regional Medical Center,,1019007,Baxter Regional Medical Center,,20074636.0,90378533,Invoice,0.0,402.0,0.0,0.0,-402.0,88
+03/17/2025,InjeTAK,Uro,202301,1019677,Avera Health,,1019677,Avera Health,,20084528.0,90378557,Invoice,1630.0,437.0,20.0,32600.0,32163.0,88
+03/17/2025,Tubing,Uro,202301,1019711,Baptist Health Care Authority,,1019711,Baptist Health Care Authority,,20084888.0,90378565,Invoice,577.0,46.75,25.0,14425.0,14378.25,88
+03/17/2025,Spot Ex,GI,202301,1019701,Baptist Health South Florida,,1019701,Baptist Health South Florida,,20083653.0,90378560,Invoice,690.0,64.2,20.0,13800.0,13735.8,88
+03/17/2025,InjeTAK,Uro,202301,1019540,UnityPoint Health,,1019540,UnityPoint Health,,20084652.0,90378545,Invoice,148.0,43.7,2.0,296.0,252.3,88
+03/17/2025,T-Doc Catheters,Uro,202301,1019681,Axia Women's Health,,1019681,Axia Women's Health,,20084814.0,90378559,Invoice,460.0,81.6,10.0,4600.0,4518.4,88
+03/17/2025,Kiwi,CI,202301,1079705,Cambridge Memorial Hospital,,1079705,Cambridge Memorial Hospital,,20163688.0,90378525,Invoice,372.4,52.76,10.0,3724.0,3671.24,88
+03/17/2025,T-Doc Catheters,Uro,202301,1019736,Mount Sinai: Beth Israel,,1019736,Mount Sinai: Beth Israel,,20078147.0,90378567,Invoice,1340.0,163.2,20.0,26800.0,26636.8,88
+03/18/2025,Other Uro Dx Disposables,Uro,202301,1021220,McLaren Health Care Corp.,,1021220,McLaren Health Care Corp.,,20197527.0,90378668,Invoice,0.0,60.6,20.0,0.0,-60.6,87
+03/18/2025,RenovaRP Consumables,GI,202301,1020523,Fisher Titus Health,,1020523,Fisher Titus Health,,20082164.0,90378613,Invoice,435.0,229.25,5.0,2175.0,1945.75,87
+03/18/2025,Other Uro Tx Disposables,Uro,202301,1020165,Crisp Regional Hospital Inc.,,1020165,Crisp Regional Hospital Inc.,,20071748.0,90378591,Invoice,291.0,390.76,4.0,1164.0,773.24,87
+03/18/2025,Tubing,Uro,202301,1019756,Golden Gate Urology,,1019756,Golden Gate Urology,,20083232.0,90378569,Invoice,577.0,46.75,25.0,14425.0,14378.25,87
+03/18/2025,Other GI Supply Disposables,GI,202301,1020468,AdventHealth,,1020468,AdventHealth,,20079716.0,90378609,Invoice,440.0,86.0,200.0,88000.0,87914.0,87
+03/18/2025,Optilume Strictures,Uro,202301,1021253,MedStar Health,,1021253,MedStar Health,,20076665.0,90378670,Invoice,0.0,201.0,1.0,0.0,-201.0,87
+03/18/2025,Spot Ex,GI,202301,1021169,Mainehealth,,1021169,Mainehealth,,20168341.0,90378665,Invoice,380.0,32.1,10.0,3800.0,3767.9,87
+03/18/2025,Water Catheters,Uro,202301,1020440,Cox Health,,1020440,Cox Health,,20166757.0,90378608,Invoice,1910.0,464.0,100.0,191000.0,190536.0,87
+03/18/2025,InjeTAK,Uro,202301,1020597,Genesis Healthcare Partners,,1020597,Genesis Healthcare Partners,,20166291.0,90378616,Invoice,444.0,131.1,6.0,2664.0,2532.9,87
+03/18/2025,Other GI Supply Disposables,GI,202301,1020425,Fairfield Medical Center,,1020425,Fairfield Medical Center,,20082533.0,90378606,Invoice,118.0,22.5,50.0,5900.0,5877.5,87
+03/18/2025,Electrodes,Uro,202301,1021125,Integrated Medical Professionals PLLC,,1021125,Integrated Medical Professionals PLLC,,20068568.0,90378659,Invoice,340.0,75.1,10.0,3400.0,3324.9,87
+03/19/2025,T-Doc Catheters,Uro,202301,1021732,Ohio State University Physicians,,1021732,Ohio State University Physicians,,20080333.0,90378715,Invoice,2010.0,591.0,30.0,60300.0,59709.0,86
+03/19/2025,Tubing,Uro,202301,1021455,"Optum Medical Care, P.C.",,1021455,"Optum Medical Care, P.C.",,20083699.0,90378678,Invoice,398.0,46.75,25.0,9950.0,9903.25,86
+03/19/2025,Probes -Urostym,Uro,202301,1021820,"Physicians East, P.A.",,1021820,"Physicians East, P.A.",,20083963.0,90378721,Invoice,830.0,106.1,10.0,8300.0,8193.9,86
+03/19/2025,RenovaRP Consumables,GI,202301,1021753,Atlantic Health System,,1021753,Atlantic Health System,,20167687.0,90378716,Invoice,500.0,229.25,5.0,2500.0,2270.75,86
+03/19/2025,Other Uro Tx Disposables,Uro,202301,1021714,Olympic Medical Center,,1021714,Olympic Medical Center,,20077080.0,90378699,Invoice,873.0,1172.28,12.0,10476.0,9303.72,86
+03/20/2025,InjeTAK,Uro,202301,1021918,Presbyterian Healthcare Services,,1021918,Presbyterian Healthcare Services,,20170279.0,90378723,Invoice,489.0,131.1,6.0,2934.0,2802.9,85
+03/20/2025,InjeTAK,Uro,202301,1022280,Village Practice Management Company,,1022280,Village Practice Management Company,,20168675.0,90378756,Invoice,288.0,131.1,6.0,1728.0,1596.9,85
+03/20/2025,T-Doc Catheters,Uro,202301,1021928,Providence Health & Services,,1021928,Providence Health & Services,,20084370.0,90378728,Invoice,736.0,163.2,20.0,14720.0,14556.8,85
+03/20/2025,InjeTAK,Uro,202301,1022572,Cleveland Clinic Health,,1022572,Cleveland Clinic Health,,20082814.0,90378782,Invoice,109.0,23.68,2.0,218.0,194.32,85
+03/20/2025,Other Uro Dx Disposables,Uro,202301,1022487,Sutter Health System Office,,1022487,Sutter Health System Office,,20067617.0,90378772,Invoice,290.0,36.0,100.0,29000.0,28964.0,85
+03/20/2025,InjeTAK,Uro,202301,1022089,RUSH University Medical Center,,1022089,RUSH University Medical Center,,20067015.0,90378736,Invoice,740.0,218.5,10.0,7400.0,7181.5,85
+03/20/2025,RenovaRP Consumables,GI,202301,1022392,Covenant: St Joseph Nashua,,1022392,Covenant: St Joseph Nashua,,20195871.0,90378761,Invoice,860.0,460.0,80.0,68800.0,68340.0,85
+03/20/2025,Spot Ex,GI,202301,1022051,Rochester Regional Health,,1022051,Rochester Regional Health,,20082186.0,90378735,Invoice,380.0,32.1,10.0,3800.0,3767.9,85
+03/21/2025,Other Uro Dx Equipment,Uro,202301,1022840,University of Arkansas Medical Sciences,,1022840,University of Arkansas Medical Sciences,,20083683.0,90378806,Invoice,441.0,37.78,1.0,441.0,403.22,84
+03/21/2025,Tubing,Uro,202301,1022835,Associated Urological Specialists,,1022835,Associated Urological Specialists,,20076045.0,90378801,Invoice,1154.0,93.5,50.0,57700.0,57606.5,84
+03/21/2025,T-Doc Catheters,Uro,202301,1022897,Beth Israel Lahey Health,,1022897,Beth Israel Lahey Health,,20075709.0,90378810,Invoice,3996.0,284.8,40.0,159840.0,159555.2,84
+03/21/2025,UDS Other Service & Repairs,Uro,202301,1059254,Endotherapeutics NZ Ltd T/A Endoventure,,1059254,Endotherapeutics NZ Ltd T/A Endoventure,,20153402.0,90378850,Invoice,0.0,9.41,1.0,0.0,-9.41,84
+03/21/2025,Spot Ex,GI,202301,1023311,Allegheny Health Network,,1023311,Allegheny Health Network,,20068579.0,90378835,Invoice,380.0,32.1,10.0,3800.0,3767.9,84
+03/21/2025,Spot Ex,GI,202301,1107130,Outpatient Center of Delray,,1107130,Outpatient Center of Delray,,20195143.0,90378882,Invoice,345.0,32.1,10.0,3450.0,3417.9,84
+03/21/2025,Kiwi,CI,202301,1061863,NHS Supply Chain NHS Suppply Chain Accounts Payable,,1061863,NHS Supply Chain NHS Suppply Chain Accounts Payable,,20151478.0,90379000,Invoice,7782.73,1309.85,240.0,1867855.2,1866545.35,84
+03/21/2025,Other GI Supply Disposables,GI,202301,1105732,CHARLOTTESVILLE GASTRO ASSOCIATES A/P - SUSAN FOSTER,,1105732,CHARLOTTESVILLE GASTRO ASSOCIATES A/P - SUSAN FOSTER,,20193041.0,90378867,Invoice,250.0,0.0,10.0,2500.0,2500.0,84
+03/21/2025,Other GI Supply Disposables,GI,202301,1105371,United Digestive,,1105371,United Digestive,,20192535.0,90378862,Invoice,25.0,0.0,1.0,25.0,25.0,84
+03/21/2025,Spot Ex,GI,202301,1105924,Washington Gastroenterology,,1105924,Washington Gastroenterology,,20193312.0,90378869,Invoice,260.0,32.1,10.0,2600.0,2567.9,84
+03/21/2025,Spot Ex,GI,202301,1022837,University of Chicago Medicine,,1022837,University of Chicago Medicine,,20079953.0,90378802,Invoice,760.0,64.2,20.0,15200.0,15135.8,84
+03/21/2025,Uromed,Uro,202301,1061707,Alliance Healthcare Répartition,,1061707,Alliance Healthcare Répartition,,20152859.0,90378342,Credit Memo,-39.88,-7.05,-1.0,39.88,46.93,84
+03/21/2025,T-Doc Catheters,Uro,202301,1060957,CHU Caen,,1060957,CHU Caen,,20154765.0,90378355,Debit Memo,1596.77,0.0,4.0,6387.08,6387.08,84
+03/22/2025,Other Uro Dx Disposables,Uro,202301,1061370,Clinique du Grésivaudan,,1061370,Clinique du Grésivaudan,,20151150.0,90378423,Invoice,626.57,415.38,50.0,31328.5,30913.12,83
+03/22/2025,Other Uro Dx Equipment,Uro,202301,1058745,Al Zahrawi Medical Supplies L.L.C,,1058745,Al Zahrawi Medical Supplies L.L.C,,20164001.0,90378447,Invoice,549.56,67.51,2.0,1099.12,1031.61,83
+03/22/2025,Water Catheters,Uro,202301,1058952,Meden-Inmed Sp. z o.o.,,1058952,Meden-Inmed Sp. z o.o.,,1058952.0,90378452,Invoice,542.62,197.44,50.0,27131.0,26933.56,83
+03/22/2025,Other Uro Dx Disposables,Uro,202301,1059003,Sisk Healthcare t/a M.E.D. Surgical Unit 3,,1059003,Sisk Healthcare t/a M.E.D. Surgical Unit 3,,20150917.0,90378461,Invoice,175.63,34.52,25.0,4390.75,4356.23,83
+03/22/2025,babyLance,CI,202301,1060698,Klinikum Worms gGmbH,,1060698,Klinikum Worms gGmbH,,20152126.0,90378375,Invoice,442.49,124.61,350.0,154871.5,154746.89,83
+03/22/2025,Endoscopy Sheaths,Uro,202301,1061099,CH Arras,,1061099,CH Arras,,20152835.0,90378418,Invoice,3776.15,946.2,100.0,377615.0,376668.8,83
+03/22/2025,Kiwi,CI,202301,1060806,Klinikum Ingolstadt GmbH Fertigvorrat,,1060806,Klinikum Ingolstadt GmbH Fertigvorrat,,20152027.0,90378378,Invoice,810.55,93.71,15.0,12158.25,12064.54,83
+03/22/2025,Incontinence UPC Lead Sets,Uro,202301,1061774,East and North Hertfordshire NHS Trust RWH Payables 6435,,1061774,East and North Hertfordshire NHS Trust RWH Payables 6435,,20156283.0,90378389,Invoice,4391.74,238.48,6.0,26350.44,26111.96,83
+03/22/2025,Ph/Impedance Catheters,GI,202301,1070281,EB Neuro  S.p.A. Purchasing / Mgmt Asst,,1070281,EB Neuro  S.p.A. Purchasing / Mgmt Asst,,20156439.0,90378457,Invoice,606.48,252.68,20.0,12129.6,11876.92,83
+03/22/2025,Endoscopy Sheaths,Uro,202301,1069312,Andros Clinics t.a.v. financiële administratie,,1069312,Andros Clinics t.a.v. financiële administratie,,1059192.0,90378479,Invoice,2909.47,561.89,60.0,174568.2,174006.31,83
+03/22/2025,Kiwi,CI,202301,1070398,Viecuri Medisch Centrum Financiële administratie,,1070398,Viecuri Medisch Centrum Financiële administratie,,20156356.0,90378481,Invoice,470.4,80.05,10.0,4704.0,4623.95,83
+03/22/2025,Portascan 3D,Uro,202301,1061052,CH Avranches Granville,,1061052,CH Avranches Granville,,20155566.0,90378416,Invoice,1747.82,26.5,1.0,1747.82,1721.32,83
+03/22/2025,Tubing,Uro,202301,1061808,SHL Spire Healthcare Ltd Accounts Payable,,1061808,SHL Spire Healthcare Ltd Accounts Payable,,20151780.0,90378396,Invoice,46.53,13.86,10.0,465.3,451.44,83
+03/22/2025,UDS Other Service & Repairs,Uro,202301,1059821,Asbl Clin.Notre-Dame De Grâce,,1059821,Asbl Clin.Notre-Dame De Grâce,,1059821.0,90378438,Invoice,127.04,40.12,1.0,127.04,86.92,83
+03/22/2025,Endoscopy Sheaths,Uro,202301,1082661,Clinique d'Argonay,,1082661,Clinique d'Argonay,,20152774.0,90378427,Invoice,712.07,215.13,20.0,14241.4,14026.27,83
+03/22/2025,Ph/Impedance Catheters,GI,202301,1089817,St. George's Univ.Hosp. NHS FT RJ7 Payables F945,,1089817,St. George's Univ.Hosp. NHS FT RJ7 Payables F945,,20155005.0,90378391,Invoice,551.89,94.54,5.0,2759.45,2664.91,83
+03/22/2025,Ph/Impedance Catheters,GI,202301,1061755,The Leeds Teaching Hospital NHS Trust Finance Department,,1061755,The Leeds Teaching Hospital NHS Trust Finance Department,,20171157.0,90378386,Invoice,1960.37,633.74,50.0,98018.5,97384.76,83
+03/23/2025,Other Uro Dx Equipment,Uro,202301,9980000179,SARA POORSAADATI,,9980000179,SARA POORSAADATI,,9980000179.0,90378531,Invoice,0.0,295.45,1.0,0.0,-295.45,82
+03/23/2025,Traxi,CI,202301,1078679,Cardinal Health,,1078679,Cardinal Health,,20166710.0,90378508,Invoice,455.0,29.6,10.0,4550.0,4520.4,82
+03/23/2025,ROM,CI,202301,1020072,Claflin Company,,1020072,Claflin Company,,20163261.0,90378499,Invoice,42.5,30.75,5.0,212.5,181.75,82
+03/23/2025,EverLift,GI,202301,1019137,Doylestown Health Hospital,,1019137,Doylestown Health Hospital,,20071962.0,90378536,Invoice,1600.0,179.6,40.0,64000.0,63820.4,82
+03/23/2025,Kiwi,CI,202301,1059198,Zorgservice XL t.a.v. Crediteurenadministratie,,1059198,Zorgservice XL t.a.v. Crediteurenadministratie,,20152872.0,90378484,Invoice,256.7,50.6,5.0,1283.5,1232.9,82
+03/23/2025,Eclipse,Uro,202301,1020484,Fort Belvoir Community Hospital,,1020484,Fort Belvoir Community Hospital,,20074416.0,90378500,Invoice,999.0,138.13,1.0,999.0,860.87,82
+03/23/2025,Other Uro Dx Equipment,Uro,202301,9980000913,Albert Meek Meek,,9980000913,Albert Meek Meek,,9980000913.0,90378489,Invoice,0.0,63.22,2.0,0.0,-63.22,82
+03/23/2025,Flowmaster,Uro,202301,1108461,Dr. Matthias Kretz,,1108461,Dr. Matthias Kretz,,9980000931.0,90378494,Invoice,2691.59,446.3,1.0,2691.59,2245.29,82
+03/23/2025,Kiwi,CI,202301,1078697,FIVE HILLS HEALTH REGION *CONSOLIDATED use 1078834*,1078834,1078834,Saskatchewan Health Authority,,20162899.0,90378517,Invoice,601.05,79.14,15.0,9015.75,8936.61,82
+03/24/2025,RenovaRP pump,GI,202301,1019541,Allina Health System,,1019541,Allina Health System,,9980001324.0,90378547,Invoice,0.0,0.0,1.0,0.0,0.0,81
+03/24/2025,T-Doc Catheters,Uro,202301,1019632,Associates in Women's Health,,1019632,Associates in Women's Health,,20077168.0,90378550,Invoice,1340.0,163.2,20.0,26800.0,26636.8,81
+03/24/2025,Spot Ex,GI,202301,1019812,Bon Secours Mercy Health,,1019812,Bon Secours Mercy Health,,20079196.0,90378571,Invoice,380.0,32.1,10.0,3800.0,3767.9,81
+03/24/2025,T-Doc Catheters,Uro,202301,1020259,Billings Clinic,,1020259,Billings Clinic,,20079148.0,90378594,Invoice,1572.0,73.6,20.0,31440.0,31366.4,81
+03/24/2025,T-Doc Catheters,Uro,202301,1020656,Genesis Healthcare System,,1020656,Genesis Healthcare System,,20079036.0,90378624,Invoice,1164.0,163.2,20.0,23280.0,23116.8,81
+03/24/2025,Spot Ex,GI,202301,1020487,Covenant Health,,1020487,Covenant Health,,20075160.0,90378610,Invoice,380.0,32.1,10.0,3800.0,3767.9,81
+03/24/2025,RenovaRP Consumables,GI,202301,1020621,CHI - Common Spirit Health,,1020621,CHI - Common Spirit Health,,20077522.0,90378619,Invoice,975.0,304.75,25.0,24375.0,24070.25,81
+03/24/2025,Tubing,Uro,202301,1020385,Enloe Medical Center,,1020385,Enloe Medical Center,,20083897.0,90378602,Invoice,1731.0,140.25,75.0,129825.0,129684.75,81
+03/24/2025,InjeTAK,Uro,202301,1020264,Denver Health & Hosp Authority,,1020264,Denver Health & Hosp Authority,,20074681.0,90378595,Invoice,264.0,47.36,4.0,1056.0,1008.64,81
+03/24/2025,InjeTAK,Uro,202301,1020394,Erlanger Health System,,1020394,Erlanger Health System,,20067830.0,90378605,Invoice,618.0,142.08,12.0,7416.0,7273.92,81
+03/24/2025,Other GI Supply Disposables,GI,202301,1020304,Desert Regional Medical Center,,1020304,Desert Regional Medical Center,,20193378.0,90378597,Invoice,295.0,57.5,125.0,36875.0,36817.5,81
+03/24/2025,T-Doc Catheters,Uro,202301,1020632,Prisma Health,,1020632,Prisma Health,,20163873.0,90378623,Invoice,2261.0,1379.0,70.0,158270.0,156891.0,81
+03/24/2025,Optilume Strictures,Uro,202301,1020694,Harborview Medical Center **CONSOLIDATED use 1023277**,1023277,1023277,University of Washington Medical Center,,20069053.0,90378627,Invoice,0.0,673.2,0.0,0.0,-673.2,81
+03/24/2025,UDS Other Service & Repairs,Uro,202301,1021763,PartsSource,,1021763,PartsSource,,20067499.0,90378607,Invoice,168.0,89.31,1.0,168.0,78.69,81
+03/25/2025,Water Catheters,Uro,202301,1021501,Nationwide Children's Hospital,,1021501,Nationwide Children's Hospital,,20080403.0,90378682,Invoice,849.0,131.7,30.0,25470.0,25338.3,80
+03/25/2025,T-Doc Catheters,Uro,202301,1020974,Hawaii Pacific: Kapiolani & Pali Momi,,1020974,Hawaii Pacific: Kapiolani & Pali Momi,,20067539.0,90378651,Invoice,999.0,71.2,10.0,9990.0,9918.8,80
+03/25/2025,Probes -Urostym,Uro,202301,1021334,Encore Urology,,1021334,Encore Urology,,20196973.0,90378675,Invoice,0.0,45.32,2.0,0.0,-45.32,80
+03/25/2025,T-Doc Catheters,Uro,202301,1020767,Dartmouth Health,,1020767,Dartmouth Health,,20072828.0,90378630,Invoice,999.0,71.2,10.0,9990.0,9918.8,80
+03/25/2025,EverLift,GI,202301,1021478,MultiCare Health System,,1021478,MultiCare Health System,,20084564.0,90378681,Invoice,1170.0,134.7,30.0,35100.0,34965.3,80
+03/25/2025,Other Uro Dx Equipment,Uro,202301,1020971,Kaiser Health Plan Asset Mgmt,,1020971,Kaiser Health Plan Asset Mgmt,,20072528.0,90378648,Invoice,1733.0,932.86,1.0,1733.0,800.14,80
+03/25/2025,RenovaRP Consumables,GI,202301,1020820,Haywood Regional Medical Center,,1020820,Haywood Regional Medical Center,,20081229.0,90378632,Invoice,1500.0,687.75,15.0,22500.0,21812.25,80
+03/25/2025,T-Doc Catheters,Uro,202301,1021448,Mercury Surgery Center,,1021448,Mercury Surgery Center,,20075863.0,90378677,Invoice,4224.0,555.2,40.0,168960.0,168404.8,80
+03/26/2025,Other Uro Dx Equipment,Uro,202301,1021614,Northwoods Urology,,1021614,Northwoods Urology,,20075555.0,90378691,Invoice,0.0,0.0,1.0,0.0,0.0,79
+03/26/2025,Incontinence UPC Lead Sets,Uro,202301,1021728,The Oregon Clinic PC,,1021728,The Oregon Clinic PC,,20074505.0,90378712,Invoice,6223.0,327.6,7.0,43561.0,43233.4,79
+03/26/2025,InjeTAK,Uro,202301,1021716,Orlando Health,,1021716,Orlando Health,,20082577.0,90378706,Invoice,396.0,71.04,6.0,2376.0,2304.96,79
+03/26/2025,T-Doc Catheters,Uro,202301,1022004,Reid Physicians Associates Inc.,,1022004,Reid Physicians Associates Inc.,,20076557.0,90378731,Invoice,2358.0,692.4,30.0,70740.0,70047.6,79
+03/26/2025,EverLift,GI,202301,1021583,Tennova Healthcare (CHS),,1021583,Tennova Healthcare (CHS),,20077971.0,90378684,Invoice,800.0,89.8,20.0,16000.0,15910.2,79
+03/26/2025,Spot Ex,GI,202301,1021779,Park Nicollet Health Services **CONSOLIDATED use 1020816*,1020816,1020816,HealthPartners,,20171038.0,90378719,Invoice,760.0,64.2,20.0,15200.0,15135.8,79
+03/26/2025,EverLift,GI,202301,1021591,Northwell Health,,1021591,Northwell Health,,20168582.0,90378686,Invoice,0.0,0.0,20.0,0.0,0.0,79
+03/26/2025,RenovaRP Consumables,GI,202301,1022013,Reading Hospital (Tower Health),,1022013,Reading Hospital (Tower Health),,20195502.0,90378732,Invoice,430.0,230.0,40.0,17200.0,16970.0,79
+03/27/2025,Electrodes,Uro,202301,1022573,Three Rivers Medical Center,,1022573,Three Rivers Medical Center,,20167186.0,90378783,Invoice,93.0,27.1,10.0,930.0,902.9,78
+03/27/2025,Endoscopy Sheaths,Uro,202301,1022461,Hawaii Pacific: Straub Clinic & Hospital,,1022461,Hawaii Pacific: Straub Clinic & Hospital,,20070860.0,90378771,Invoice,1238.0,9.0,20.0,24760.0,24751.0,78
+03/27/2025,Spot Ex,GI,202301,1022445,Stormont Vail Healthcare,,1022445,Stormont Vail Healthcare,,20068795.0,90378769,Invoice,380.0,32.1,10.0,3800.0,3767.9,78
+03/27/2025,Water Catheters,Uro,202301,1022419,UCSF Medical Center,,1022419,UCSF Medical Center,,20078642.0,90378766,Invoice,1132.0,181.2,40.0,45280.0,45098.8,78
+03/27/2025,Spot Ex,GI,202301,1022370,"Steward Health Care System, LLC *12.3.24 CONSOLIDATED 1020608*",1020608,1020608,Steward Health Care System,,20075287.0,90378760,Invoice,1035.0,96.3,30.0,31050.0,30953.7,78
+03/28/2025,UDS Other Service & Repairs,Uro,202301,1022981,Minnesota Urology,,1022981,Minnesota Urology,,20069146.0,90378816,Invoice,0.0,89.31,1.0,0.0,-89.31,77
+03/28/2025,Tubing,Uro,202301,1024862,Stillwater Medical Center,,1024862,Stillwater Medical Center,,20165566.0,90378842,Invoice,577.0,46.75,25.0,14425.0,14378.25,77
+03/28/2025,RenovaRP Consumables,GI,202301,1022809,UNC Health Care System,,1022809,UNC Health Care System,,20072507.0,90378793,Invoice,210.0,115.0,20.0,4200.0,4085.0,77
+03/28/2025,Spot Ex,GI,202301,1026530,Mason City Surgery Center,,1026530,Mason City Surgery Center,,20084697.0,90378845,Invoice,345.0,32.1,10.0,3450.0,3417.9,77
+03/28/2025,Electrodes,Uro,202301,1023307,WakeMed Health and Hospitals,,1023307,WakeMed Health and Hospitals,,20077328.0,90378834,Invoice,279.0,81.3,30.0,8370.0,8288.7,77
+03/28/2025,InjeTAK,Uro,202301,1022834,University Of Chicago,,1022834,University Of Chicago,,20083655.0,90378800,Invoice,815.0,218.5,10.0,8150.0,7931.5,77
+03/28/2025,T-Doc Catheters,Uro,202301,1022962,"Urology Associates, PC",,1022962,"Urology Associates, PC",,20081868.0,90378813,Invoice,2496.0,220.8,60.0,149760.0,149539.2,77
+03/29/2025,EverLift,GI,202301,1105951,Digestive Health Center of Allen,,1105951,Digestive Health Center of Allen,,20193347.0,90378873,Invoice,350.0,44.9,10.0,3500.0,3455.1,76
+03/29/2025,EverLift,GI,202301,1105450,ADVANCED SURGERY CENTER ACCOUNTS PAYABLE,,1105450,ADVANCED SURGERY CENTER ACCOUNTS PAYABLE,,20192658.0,90378866,Invoice,360.0,44.9,10.0,3600.0,3555.1,76
+03/29/2025,Tubing,Uro,202301,1026735,Ascension Med Group Providence Urology,,1026735,Ascension Med Group Providence Urology,,20084995.0,90378846,Invoice,355.0,44.5,50.0,17750.0,17705.5,76
+03/29/2025,Incontinence MPQ,Uro,202301,1083501,Chesapeake Regional Surgery Ctr,,1083501,Chesapeake Regional Surgery Ctr,,20167214.0,90378852,Invoice,78.0,26.76,2.0,156.0,129.24,76
+03/29/2025,Spot Ex,GI,202301,1106079,ENDO-CENTER ACCOUNTS PAYABLE,,1106079,ENDO-CENTER ACCOUNTS PAYABLE,,20193536.0,90378874,Invoice,380.0,32.1,10.0,3800.0,3767.9,76
+03/29/2025,RenovaRP Consumables,GI,202301,1106520,HOWARD UNIVERSITY HOSPITAL ACCOUNTS PAYABLE,,1106520,HOWARD UNIVERSITY HOSPITAL ACCOUNTS PAYABLE,,20194173.0,90378877,Invoice,860.0,460.0,80.0,68800.0,68340.0,76
+03/29/2025,UDS Other Service & Repairs,Uro,202301,1089505,Community Medical Partners,,1089505,Community Medical Partners,,20197453.0,90378856,Invoice,0.0,6.06,1.0,0.0,-6.06,76
+03/29/2025,RenovaRP Consumables,GI,202301,1086526,Culpeper Memorial Hospital Inc d/b/a Novant Health UVA Health System,,1086526,Culpeper Memorial Hospital Inc d/b/a Novant Health UVA Health System,,20168124.0,90378854,Invoice,945.0,182.85,15.0,14175.0,13992.15,76
+03/30/2025,Optilume Strictures,Uro,202301,1022112,USA Health University Hospital,,1022112,USA Health University Hospital,,20072757.0,90378740,Invoice,6285.0,0.0,3.0,18855.0,18855.0,75
+03/30/2025,Spot Ex,GI,202301,1022115,Hospital Sisters Health System,,1022115,Hospital Sisters Health System,,20084178.0,90378741,Invoice,345.0,32.1,10.0,3450.0,3417.9,75
+03/30/2025,Other GI Supply Disposables,GI,202301,1022138,Santa Clara Valley Health & Hosp,,1022138,Santa Clara Valley Health & Hosp,,20075407.0,90378743,Invoice,388.0,140.0,200.0,77600.0,77460.0,75
+03/30/2025,Electrodes,Uro,202301,1022160,Baylor Scott & White Health,,1022160,Baylor Scott & White Health,,20084297.0,90378745,Invoice,37.0,11.8,10.0,370.0,358.2,75
+03/30/2025,Other GI Supply Disposables,GI,202301,1108096,WEST SHORE ENDOSCOPY CENTER ACCOUNTS PAYABLE,,1108096,WEST SHORE ENDOSCOPY CENTER ACCOUNTS PAYABLE,,20196665.0,90378887,Invoice,375.0,0.0,15.0,5625.0,5625.0,75
+03/30/2025,UDS Service Contracts,Uro,202301,1108603,Baptist Health Centers,,1108603,Baptist Health Centers,,20070749.0,90378891,Invoice,2662.0,0.0,1.0,2662.0,2662.0,75
+03/31/2025,RenovaRP Consumables,GI,202301,1022755,University of Kentucky Healthcare,,1022755,University of Kentucky Healthcare,,20071793.0,90378789,Invoice,2600.0,487.6,40.0,104000.0,103512.4,74
+03/31/2025,InjeTAK,Uro,202301,1022713,Ascension Health Ministry Service C,,1022713,Ascension Health Ministry Service C,,20083366.0,90378786,Invoice,132.0,23.68,2.0,264.0,240.32,74
+03/31/2025,Incontinence UPC Lead Sets,Uro,202301,1022237,Sharp Healthcare,,1022237,Sharp Healthcare,,20072560.0,90378754,Invoice,2457.0,140.4,3.0,7371.0,7230.6,74
+03/31/2025,InjeTAK,Uro,202301,1022457,Dignity Health - AZ/NV,,1022457,Dignity Health - AZ/NV,,20070516.0,90378770,Invoice,815.0,218.5,10.0,8150.0,7931.5,74
+03/31/2025,Incontinence UPC Lead Sets,Uro,202301,1022545,Tennessee Valley Urology CenterP.C.,,1022545,Tennessee Valley Urology CenterP.C.,,20077730.0,90378774,Invoice,2802.0,140.4,3.0,8406.0,8265.6,74
+03/31/2025,EverLift,GI,202301,1022567,Jefferson Health,,1022567,Jefferson Health,,20167049.0,90378776,Invoice,720.0,89.8,20.0,14400.0,14310.2,74
