@@ -6,6 +6,8 @@
 *.py[cod]
 *$py.class
 nohup.out
+.env
+files/uploads/
 
 # Distribution / packaging
 build/

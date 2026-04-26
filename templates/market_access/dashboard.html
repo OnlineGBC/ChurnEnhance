@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}Market Access AI — CustomerChurn AI{% endblock %}
+{% block page_title %}Market Access AI{% endblock %}
+
+{% block content %}
+<!-- Controls -->
+<div class="mb-6 flex items-center justify-between">
+    <p class="text-sm text-gray-500">Build ideal customer profiles, identify expansion opportunities, and model revenue.</p>
+    <button id="run-market-btn" onclick="runMarketAnalysis()"
+            class="bg-brand-teal text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-teal-dark transition-colors flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Run Market Analysis
+    </button>
+</div>
+
+<div id="analysis-status" class="mb-6 hidden">
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center gap-3">
+        <svg class="w-5 h-5 text-blue-500 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        <span class="text-sm text-blue-700" id="status-text">Running market access analysis...</span>
+    </div>
+</div>
+
+<!-- ICP Profiles -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+    <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-800">Ideal Customer Profiles</h2>
+    </div>
+    <div class="p-6">
+        {% if icp_profiles %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for icp in icp_profiles %}
+            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold text-gray-800">{{ icp.segment_name }}</h3>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
+                        {% if icp.acquisition_priority == 'high' %}bg-green-100 text-green-700
+                        {% elif icp.acquisition_priority == 'medium' %}bg-yellow-100 text-yellow-700
+                        {% else %}bg-gray-100 text-gray-700{% endif %}">
+                        {{ icp.acquisition_priority or 'N/A' }} priority
+                    </span>
+                </div>
+                <dl class="space-y-1.5 text-sm">
+                    <div class="flex justify-between">
+                        <dt class="text-gray-500">Industry</dt>
+                        <dd class="text-gray-700">{{ icp.industry or '—' }}</dd>
+                    </div>
+                    <div class="flex justify-between">
+                        <dt class="text-gray-500">Product GBU</dt>
+                        <dd class="text-gray-700">{{ icp.product_gbu or '—' }}</dd>
+                    </div>
+                    <div class="flex justify-between">
+                        <dt class="text-gray-500">Geography</dt>
+                        <dd class="text-gray-700">{{ icp.geography or '—' }}</dd>
+                    </div>
+                    <div class="flex justify-between">
+                        <dt class="text-gray-500">Revenue Range</dt>
+                        <dd class="text-gray-700">${{ '%.0f' % (icp.revenue_min or 0) }}–${{ '%.0f' % (icp.revenue_max or 0) }}</dd>
+                    </div>
+                    <div class="flex justify-between">
+                        <dt class="text-gray-500">Est. LTV</dt>
+                        <dd class="font-medium text-gray-900">${{ '%.0f' % (icp.ltv_estimate or 0) }}</dd>
+                    </div>
+                </dl>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-12 text-gray-400">
+            <p class="text-sm">No ICP profiles yet. Click "Run Market Analysis" to generate.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Lead Scores -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-200">
+    <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-800">Segment Scores</h2>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Segment</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Score</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Est. LTV</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Channel</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rationale</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for lead in lead_scores %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 font-medium">
+                        <a href="/market-access/{{ lead.segment }}" class="text-brand-teal hover:underline">{{ lead.segment }}</a>
+                    </td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-2">
+                            <div class="w-16 bg-gray-200 rounded-full h-2">
+                                <div class="h-2 rounded-full bg-brand-teal" style="width: {{ (lead.score * 100) | int }}%"></div>
+                            </div>
+                            <span class="text-xs text-gray-500">{{ '%.0f' % (lead.score * 100) }}%</span>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-gray-600">${{ '%.0f' % (lead.estimated_ltv or 0) }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ lead.recommended_channel or '—' }}</td>
+                    <td class="px-4 py-3 text-gray-500 text-xs max-w-xs truncate">{{ lead.rationale or '—' }}</td>
+                </tr>
+                {% endfor %}
+                {% if not lead_scores %}
+                <tr>
+                    <td colspan="5" class="px-4 py-8 text-center text-gray-400 text-sm">No scores yet.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+async function runMarketAnalysis() {
+    const btn = document.getElementById('run-market-btn');
+    const status = document.getElementById('analysis-status');
+    btn.disabled = true;
+    btn.classList.add('opacity-50');
+    status.classList.remove('hidden');
+
+    try {
+        const resp = await fetch('/api/market-access/run', { method: 'POST' });
+        const data = await resp.json();
+        if (data.status === 'completed') {
+            document.getElementById('status-text').textContent = 'Analysis complete! Refreshing...';
+            setTimeout(() => window.location.reload(), 1000);
+        } else {
+            document.getElementById('status-text').textContent = 'Error: ' + (data.error || 'Unknown error');
+        }
+    } catch (err) {
+        document.getElementById('status-text').textContent = 'Error: ' + err.message;
+    } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Product Flags — CustomerChurn AI{% endblock %}
+{% block page_title %}Product Inactivity Flags{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+        <form method="POST" action="/flags/product" class="flex items-center gap-3">
+            <div>
+                <label class="text-sm text-gray-600">Yellow (days):</label>
+                <input type="number" name="yellow_flag" value="{{ yellow_flag }}" min="1"
+                       class="w-20 border border-gray-300 rounded px-2 py-1 text-sm">
+            </div>
+            <div>
+                <label class="text-sm text-gray-600">Red (days):</label>
+                <input type="number" name="red_flag" value="{{ red_flag }}" min="1"
+                       class="w-20 border border-gray-300 rounded px-2 py-1 text-sm">
+            </div>
+            <button type="submit" class="bg-brand-teal text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-brand-teal-dark">
+                Apply
+            </button>
+        </form>
+    </div>
+    <div class="flex gap-2">
+        <a href="/flags/product/download/yellow" class="bg-yellow-500 text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-yellow-600">
+            Download Yellow CSV
+        </a>
+        <a href="/flags/product/download/red" class="bg-red-500 text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-red-600">
+            Download Red CSV
+        </a>
+    </div>
+</div>
+
+<!-- Summary -->
+<div class="grid grid-cols-3 gap-4 mb-6">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+        <p class="text-sm text-gray-500">Customer-Product Combinations</p>
+        <p class="text-2xl font-bold text-gray-900">{{ total_count }}</p>
+    </div>
+    <div class="bg-yellow-50 rounded-xl shadow-sm border border-yellow-200 p-4">
+        <p class="text-sm text-yellow-700">Yellow Flag</p>
+        <p class="text-2xl font-bold text-yellow-600">{{ yellow_count }}</p>
+    </div>
+    <div class="bg-red-50 rounded-xl shadow-sm border border-red-200 p-4">
+        <p class="text-sm text-red-700">Red Flag</p>
+        <p class="text-2xl font-bold text-red-600">{{ red_count }}</p>
+    </div>
+</div>
+
+<!-- Tables -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-200">
+    <div class="border-b border-gray-200">
+        <nav class="flex -mb-px">
+            <button onclick="showTab('yellow')" id="tab-yellow"
+                    class="px-6 py-3 text-sm font-medium border-b-2 border-yellow-500 text-yellow-600">
+                Yellow Flags ({{ yellow_count }})
+            </button>
+            <button onclick="showTab('red')" id="tab-red"
+                    class="px-6 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                Red Flags ({{ red_count }})
+            </button>
+        </nav>
+    </div>
+    <div class="overflow-x-auto">
+        {% for flag_type in ['yellow', 'red'] %}
+        <table id="panel-{{ flag_type }}" class="w-full text-sm {% if flag_type == 'red' %}hidden{% endif %}">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer No</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product GBU</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Last Transaction</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Inactivity (days)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% set rows = yellow_flags if flag_type == 'yellow' else red_flags %}
+                {% for row in rows %}
+                <tr class="hover:bg-{{ 'yellow' if flag_type == 'yellow' else 'red' }}-50">
+                    <td class="px-4 py-3 font-medium">
+                        <a href="/retention/{{ row.customer_no }}" class="text-brand-teal hover:underline">{{ row.customer_no }}</a>
+                    </td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.customer_name or '—' }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.product or '—' }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.product_gbu or '—' }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.last_txn.strftime('%m/%d/%Y') if row.last_txn else '—' }}</td>
+                    <td class="px-4 py-3">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                            bg-{{ 'yellow' if flag_type == 'yellow' else 'red' }}-100 text-{{ 'yellow' if flag_type == 'yellow' else 'red' }}-800">
+                            {{ row.inactivity_days }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function showTab(name) {
+    ['yellow', 'red'].forEach(t => {
+        document.getElementById('panel-' + t).classList.add('hidden');
+        document.getElementById('tab-' + t).classList.remove('border-yellow-500', 'text-yellow-600', 'border-red-500', 'text-red-600');
+        document.getElementById('tab-' + t).classList.add('border-transparent', 'text-gray-500');
+    });
+    document.getElementById('panel-' + name).classList.remove('hidden');
+    const tab = document.getElementById('tab-' + name);
+    tab.classList.remove('border-transparent', 'text-gray-500');
+    if (name === 'yellow') { tab.classList.add('border-yellow-500', 'text-yellow-600'); }
+    else { tab.classList.add('border-red-500', 'text-red-600'); }
+}
+</script>
+{% endblock %}

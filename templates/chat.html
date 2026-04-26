@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Chat — CustomerChurn AI{% endblock %}
+{% block page_title %}Agent Chat{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto flex flex-col h-[calc(100vh-10rem)]">
+    <!-- Chat Messages -->
+    <div id="chat-messages" class="flex-1 overflow-y-auto space-y-4 pb-4">
+        <div class="flex gap-3">
+            <div class="w-8 h-8 rounded-full bg-brand-teal flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <div class="bg-white rounded-lg border border-gray-200 px-4 py-3 max-w-2xl">
+                <p class="text-sm text-gray-700">Hello! I'm your CustomerChurn AI assistant. I can help you with:</p>
+                <ul class="text-sm text-gray-600 mt-2 space-y-1 list-disc list-inside">
+                    <li>Analyzing churn risk for specific customers</li>
+                    <li>Understanding why customers are at risk</li>
+                    <li>Finding growth opportunities in segments</li>
+                    <li>Recommending retention strategies</li>
+                </ul>
+                <p class="text-sm text-gray-600 mt-2">Try: "Why is customer 1018992 at risk?" or "Show growth opportunities in the Southeast"</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input -->
+    <div class="border-t border-gray-200 bg-white rounded-b-xl p-4">
+        <form id="chat-form" class="flex gap-3">
+            <input type="text" id="chat-input" placeholder="Ask about customers, churn risk, or opportunities..."
+                   class="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-brand-teal focus:border-brand-teal"
+                   autocomplete="off">
+            <button type="submit" class="bg-brand-teal text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-teal-dark transition-colors flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                Send
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

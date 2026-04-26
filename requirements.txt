@@ -1,3 +1,15 @@
-streamlit
+flask>=3.0
+gunicorn
+jinja2
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-openai>=0.2.0
+langchain-anthropic>=0.3.0
+langchain-community>=0.3.0
 pandas
-
+pydantic>=2.0
+python-dotenv
+sqlalchemy>=2.0
+psycopg2-binary
+openpyxl
+streamlit

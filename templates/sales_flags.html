@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block title %}Sales Flags — CustomerChurn AI{% endblock %}
+{% block page_title %}Sales Inactivity Flags{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+        <form method="POST" action="/flags/sales" class="flex items-center gap-3">
+            <div>
+                <label class="text-sm text-gray-600">Yellow (days):</label>
+                <input type="number" name="yellow_flag" value="{{ yellow_flag }}" min="1"
+                       class="w-20 border border-gray-300 rounded px-2 py-1 text-sm">
+            </div>
+            <div>
+                <label class="text-sm text-gray-600">Red (days):</label>
+                <input type="number" name="red_flag" value="{{ red_flag }}" min="1"
+                       class="w-20 border border-gray-300 rounded px-2 py-1 text-sm">
+            </div>
+            <button type="submit" class="bg-brand-teal text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-brand-teal-dark">
+                Apply
+            </button>
+        </form>
+    </div>
+    <div class="flex gap-2">
+        <a href="/flags/sales/download/yellow" class="bg-yellow-500 text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-yellow-600">
+            Download Yellow CSV
+        </a>
+        <a href="/flags/sales/download/red" class="bg-red-500 text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-red-600">
+            Download Red CSV
+        </a>
+    </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="grid grid-cols-3 gap-4 mb-6">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+        <p class="text-sm text-gray-500">Total Customers</p>
+        <p class="text-2xl font-bold text-gray-900">{{ total_count }}</p>
+    </div>
+    <div class="bg-yellow-50 rounded-xl shadow-sm border border-yellow-200 p-4">
+        <p class="text-sm text-yellow-700">Yellow Flag ({{ yellow_flag }}–{{ red_flag }} days)</p>
+        <p class="text-2xl font-bold text-yellow-600">{{ yellow_count }}</p>
+    </div>
+    <div class="bg-red-50 rounded-xl shadow-sm border border-red-200 p-4">
+        <p class="text-sm text-red-700">Red Flag (>{{ red_flag }} days)</p>
+        <p class="text-2xl font-bold text-red-600">{{ red_count }}</p>
+    </div>
+</div>
+
+<!-- Tabs -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-200">
+    <div class="border-b border-gray-200">
+        <nav class="flex -mb-px" id="flag-tabs">
+            <button onclick="showTab('yellow')" id="tab-yellow"
+                    class="px-6 py-3 text-sm font-medium border-b-2 border-yellow-500 text-yellow-600">
+                Yellow Flags ({{ yellow_count }})
+            </button>
+            <button onclick="showTab('red')" id="tab-red"
+                    class="px-6 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                Red Flags ({{ red_count }})
+            </button>
+            <button onclick="showTab('all')" id="tab-all"
+                    class="px-6 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                All Customers ({{ total_count }})
+            </button>
+        </nav>
+    </div>
+    <div class="overflow-x-auto">
+        <!-- Yellow Flag Table -->
+        <table id="panel-yellow" class="w-full text-sm">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer No</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Region</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Last Transaction</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Inactivity (days)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for row in yellow_flags %}
+                <tr class="hover:bg-yellow-50">
+                    <td class="px-4 py-3 font-medium">
+                        <a href="/retention/{{ row.customer_no }}" class="text-brand-teal hover:underline">{{ row.customer_no }}</a>
+                    </td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.customer_name or '—' }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.sales_region or '—' }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.last_transaction_date.strftime('%m/%d/%Y') if row.last_transaction_date else '—' }}</td>
+                    <td class="px-4 py-3">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                            {{ row.sales_inactivity_days }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Red Flag Table -->
+        <table id="panel-red" class="w-full text-sm hidden">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer No</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Region</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Last Transaction</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Inactivity (days)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for row in red_flags %}
+                <tr class="hover:bg-red-50">
+                    <td class="px-4 py-3 font-medium">
+                        <a href="/retention/{{ row.customer_no }}" class="text-brand-teal hover:underline">{{ row.customer_no }}</a>
+                    </td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.customer_name or '—' }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.sales_region or '—' }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.last_transaction_date.strftime('%m/%d/%Y') if row.last_transaction_date else '—' }}</td>
+                    <td class="px-4 py-3">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                            {{ row.sales_inactivity_days }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- All Customers Table -->
+        <table id="panel-all" class="w-full text-sm hidden">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer No</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Region</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Last Transaction</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Inactivity (days)</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Flag</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for row in all_customers %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 font-medium">
+                        <a href="/retention/{{ row.customer_no }}" class="text-brand-teal hover:underline">{{ row.customer_no }}</a>
+                    </td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.customer_name or '—' }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.sales_region or '—' }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.last_transaction_date.strftime('%m/%d/%Y') if row.last_transaction_date else '—' }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ row.sales_inactivity_days or '—' }}</td>
+                    <td class="px-4 py-3">
+                        {% if row.churn_flag == 'Red' %}
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Red</span>
+                        {% elif row.churn_flag == 'Yellow' %}
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Yellow</span>
+                        {% else %}
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Active</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function showTab(name) {
+    ['yellow', 'red', 'all'].forEach(t => {
+        document.getElementById('panel-' + t).classList.add('hidden');
+        document.getElementById('tab-' + t).classList.remove('border-yellow-500', 'text-yellow-600', 'border-red-500', 'text-red-600', 'border-brand-teal', 'text-brand-teal');
+        document.getElementById('tab-' + t).classList.add('border-transparent', 'text-gray-500');
+    });
+    document.getElementById('panel-' + name).classList.remove('hidden');
+    const tab = document.getElementById('tab-' + name);
+    tab.classList.remove('border-transparent', 'text-gray-500');
+    if (name === 'yellow') { tab.classList.add('border-yellow-500', 'text-yellow-600'); }
+    else if (name === 'red') { tab.classList.add('border-red-500', 'text-red-600'); }
+    else { tab.classList.add('border-brand-teal', 'text-brand-teal'); }
+}
+</script>
+{% endblock %}
