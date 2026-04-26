@@ -12,13 +12,31 @@ retention_bp = Blueprint("retention", __name__)
 def dashboard():
     db = get_db_session()
     try:
-        churn_scores = db.query(ChurnScore).order_by(desc(ChurnScore.risk_score)).limit(100).all()
-        diagnoses = db.query(Diagnosis).order_by(desc(Diagnosis.created_at)).limit(20).all()
-        interventions = db.query(Intervention).order_by(desc(Intervention.created_at)).limit(50).all()
+        # Join customer name into churn scores
+        churn_scores = (db.query(ChurnScore, Customer.customer_name)
+                        .outerjoin(Customer, ChurnScore.customer_no == Customer.customer_no)
+                        .order_by(desc(ChurnScore.risk_score))
+                        .limit(100).all())
+
+        # Build diagnosis lookup keyed by customer_no
+        diag_results = (db.query(Diagnosis, Customer.customer_name)
+                        .outerjoin(Customer, Diagnosis.customer_no == Customer.customer_no)
+                        .order_by(desc(Diagnosis.created_at))
+                        .all())
+        diagnoses_by_customer = {}
+        for diag, cust_name in diag_results:
+            if diag.customer_no not in diagnoses_by_customer:
+                diagnoses_by_customer[diag.customer_no] = diag
+
+        # Join customer name into interventions
+        interventions = (db.query(Intervention, Customer.customer_name)
+                         .outerjoin(Customer, Intervention.customer_no == Customer.customer_no)
+                         .order_by(desc(Intervention.created_at))
+                         .limit(50).all())
 
         return render_template("retention/dashboard.html",
                                churn_scores=churn_scores,
-                               diagnoses=diagnoses,
+                               diagnoses_by_customer=diagnoses_by_customer,
                                interventions=interventions,
                                config=Config)
     finally:

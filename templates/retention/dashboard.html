@@ -24,87 +24,70 @@
     </div>
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Churn Risk Table -->
-    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200">
-        <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-            <h2 class="text-lg font-semibold text-gray-800">Churn Risk Scores</h2>
-            <span class="text-xs text-gray-400">{{ churn_scores | length }} results</span>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Risk Score</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Level</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100" id="churn-scores-body">
-                    {% for score in churn_scores %}
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-4 py-3">
-                            <a href="/retention/{{ score.customer_no }}" class="text-brand-teal hover:underline font-medium">{{ score.customer_no }}</a>
-                        </td>
-                        <td class="px-4 py-3">
-                            <div class="flex items-center gap-2">
-                                <div class="w-16 bg-gray-200 rounded-full h-2">
-                                    <div class="h-2 rounded-full {% if score.risk_score >= 0.7 %}bg-red-500{% elif score.risk_score >= 0.4 %}bg-yellow-500{% else %}bg-green-500{% endif %}"
-                                         style="width: {{ (score.risk_score * 100) | int }}%"></div>
-                                </div>
-                                <span class="text-xs text-gray-500">{{ '%.0f' % (score.risk_score * 100) }}%</span>
-                            </div>
-                        </td>
-                        <td class="px-4 py-3">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                {% if score.risk_level == 'high' %}bg-red-100 text-red-800
-                                {% elif score.risk_level == 'medium' %}bg-yellow-100 text-yellow-800
-                                {% else %}bg-green-100 text-green-800{% endif %}">
-                                {{ score.risk_level }}
-                            </span>
-                        </td>
-                        <td class="px-4 py-3 text-gray-600 text-xs max-w-xs truncate">{{ score.recommended_action or '—' }}</td>
-                    </tr>
-                    {% endfor %}
-                    {% if not churn_scores %}
-                    <tr>
-                        <td colspan="4" class="px-4 py-12 text-center text-gray-400">
-                            No churn scores yet. Click "Run Retention Analysis" to generate.
-                        </td>
-                    </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
+<!-- Churn Risk Scores — full width with inline diagnosis -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-200">
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-gray-800">Churn Risk Scores</h2>
+        <span class="text-xs text-gray-400">{{ churn_scores | length }} results</span>
     </div>
-
-    <!-- Diagnoses Panel -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h2 class="text-lg font-semibold text-gray-800">Recent Diagnoses</h2>
-        </div>
-        <div class="p-4 space-y-3" id="diagnoses-panel">
-            {% for diag in diagnoses %}
-            <div class="border border-gray-100 rounded-lg p-3">
-                <div class="flex items-center justify-between mb-1">
-                    <a href="/retention/{{ diag.customer_no }}" class="text-sm font-medium text-brand-teal hover:underline">{{ diag.customer_no }}</a>
-                    <span class="text-xs text-gray-400">{{ '%.0f' % (diag.confidence * 100) }}% conf.</span>
-                </div>
-                <p class="text-sm font-medium text-gray-700">{{ diag.failure_mode }}</p>
-                {% if diag.suggested_interventions %}
-                <div class="mt-2 flex flex-wrap gap-1">
-                    {% for intv in diag.suggested_interventions[:3] %}
-                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-brand-teal/10 text-brand-teal">{{ intv }}</span>
-                    {% endfor %}
-                </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer Name</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Risk Score</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Level</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Diagnosis</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Confidence</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100" id="churn-scores-body">
+                {% for score, customer_name in churn_scores %}
+                {% set diag = diagnoses_by_customer.get(score.customer_no) %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3">
+                        <a href="/retention/{{ score.customer_no }}" class="text-brand-teal hover:underline font-medium">{{ score.customer_no }}</a>
+                    </td>
+                    <td class="px-4 py-3 text-gray-700">{{ customer_name or '—' }}</td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-2">
+                            <div class="w-16 bg-gray-200 rounded-full h-2">
+                                <div class="h-2 rounded-full {% if score.risk_score >= 0.7 %}bg-red-500{% elif score.risk_score >= 0.4 %}bg-yellow-500{% else %}bg-green-500{% endif %}"
+                                     style="width: {{ (score.risk_score * 100) | int }}%"></div>
+                            </div>
+                            <span class="text-xs text-gray-500">{{ '%.0f' % (score.risk_score * 100) }}%</span>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                            {% if score.risk_level == 'high' %}bg-red-100 text-red-800
+                            {% elif score.risk_level == 'medium' %}bg-yellow-100 text-yellow-800
+                            {% else %}bg-green-100 text-green-800{% endif %}">
+                            {{ score.risk_level }}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-gray-600 text-xs max-w-xs truncate">{{ diag.failure_mode if diag else '—' }}</td>
+                    <td class="px-4 py-3">
+                        {% if diag and diag.confidence %}
+                        <span class="text-xs text-gray-500">{{ '%.0f' % (diag.confidence * 100) }}%</span>
+                        {% else %}
+                        <span class="text-xs text-gray-400">—</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-3 text-gray-600 text-xs max-w-xs truncate">{{ score.recommended_action or '—' }}</td>
+                </tr>
+                {% endfor %}
+                {% if not churn_scores %}
+                <tr>
+                    <td colspan="7" class="px-4 py-12 text-center text-gray-400">
+                        No churn scores yet. Click "Run Retention Analysis" to generate.
+                    </td>
+                </tr>
                 {% endif %}
-            </div>
-            {% endfor %}
-            {% if not diagnoses %}
-            <p class="text-sm text-gray-400 text-center py-8">No diagnoses yet.</p>
-            {% endif %}
-        </div>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -118,6 +101,7 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer Name</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Priority</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Assigned To</th>
@@ -126,11 +110,12 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100" id="interventions-body">
-                {% for intv in interventions %}
+                {% for intv, customer_name in interventions %}
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-3 font-medium">
                         <a href="/retention/{{ intv.customer_no }}" class="text-brand-teal hover:underline">{{ intv.customer_no }}</a>
                     </td>
+                    <td class="px-4 py-3 text-gray-700">{{ customer_name or '—' }}</td>
                     <td class="px-4 py-3 text-gray-600">{{ intv.intervention_type }}</td>
                     <td class="px-4 py-3">
                         <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
@@ -154,7 +139,7 @@
                 {% endfor %}
                 {% if not interventions %}
                 <tr>
-                    <td colspan="6" class="px-4 py-8 text-center text-gray-400 text-sm">No interventions queued.</td>
+                    <td colspan="7" class="px-4 py-8 text-center text-gray-400 text-sm">No interventions queued.</td>
                 </tr>
                 {% endif %}
             </tbody>
