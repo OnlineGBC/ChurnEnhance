@@ -33,22 +33,22 @@
 
 <!-- Summary -->
 <div class="grid grid-cols-3 gap-4 mb-6">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+    <div class="bg-white rounded-xl card-shine border border-gray-200 border-t-4 border-t-brand-teal p-4">
         <p class="text-sm text-gray-500">Customer-Product Combinations</p>
         <p class="text-2xl font-bold text-gray-900">{{ total_count }}</p>
     </div>
-    <div class="bg-yellow-50 rounded-xl shadow-sm border border-yellow-200 p-4">
+    <div class="bg-yellow-50 rounded-xl card-shine border border-yellow-200 border-t-4 border-t-amber-400 p-4">
         <p class="text-sm text-yellow-700">Yellow Flag</p>
-        <p class="text-2xl font-bold text-yellow-600">{{ yellow_count }}</p>
+        <p class="text-2xl font-bold text-amber-600">{{ yellow_count }}</p>
     </div>
-    <div class="bg-red-50 rounded-xl shadow-sm border border-red-200 p-4">
+    <div class="bg-red-50 rounded-xl card-shine border border-red-200 border-t-4 border-t-red-400 p-4">
         <p class="text-sm text-red-700">Red Flag</p>
         <p class="text-2xl font-bold text-red-600">{{ red_count }}</p>
     </div>
 </div>
 
 <!-- Tables -->
-<div class="bg-white rounded-xl shadow-sm border border-gray-200">
+<div class="bg-white rounded-xl card-shine border border-gray-200">
     <div class="border-b border-gray-200">
         <nav class="flex -mb-px">
             <button onclick="showTab('yellow')" id="tab-yellow"

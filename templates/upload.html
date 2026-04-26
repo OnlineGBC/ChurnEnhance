@@ -5,7 +5,7 @@
 {% block content %}
 <div class="max-w-4xl">
     <!-- Upload Form -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+    <div class="bg-white rounded-xl card-shine border border-gray-200 p-6 mb-6">
         <h2 class="text-lg font-semibold text-gray-800 mb-4">Upload Customer Transaction CSV</h2>
         <form method="POST" action="/upload" enctype="multipart/form-data" class="space-y-4">
             <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-brand-teal transition-colors">
@@ -35,7 +35,7 @@
     </div>
 
     <!-- Load from Server Path -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+    <div class="bg-white rounded-xl card-shine border border-gray-200 p-6 mb-6">
         <h2 class="text-lg font-semibold text-gray-800 mb-2">Load from Server</h2>
         <p class="text-sm text-gray-500 mb-4">Select a CSV file from the server's <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs">files/</code> directory to load into the database.</p>
         <form method="POST" action="/load-server-file" class="space-y-4">
@@ -60,7 +60,7 @@
 
     <!-- Results -->
     {% if results %}
-    <div class="mt-6 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div class="mt-6 bg-white rounded-xl card-shine border border-gray-200 p-6">
         <h2 class="text-lg font-semibold text-gray-800 mb-4">Processing Results</h2>
         <div class="grid grid-cols-2 gap-4 text-sm">
             <div class="bg-green-50 p-4 rounded-lg">
