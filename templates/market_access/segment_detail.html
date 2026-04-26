@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="mb-6">
-    <a href="/market-access" class="text-sm text-brand-teal hover:underline flex items-center gap-1">
+    <a href="/market-access" class="text-sm text-brand-primary hover:underline flex items-center gap-1">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         Back to Market Access
     </a>
@@ -16,8 +16,8 @@
     <div class="bg-white rounded-xl card-shine border border-gray-200 p-6">
         <h2 class="text-lg font-semibold text-gray-800 mb-4">Segment Score</h2>
         <div class="text-center mb-4">
-            <div class="w-24 h-24 rounded-full bg-brand-teal/10 flex items-center justify-center mx-auto">
-                <span class="text-3xl font-bold text-brand-teal">{{ '%.0f' % (lead_score.score * 100) }}%</span>
+            <div class="w-24 h-24 rounded-full bg-brand-primary/10 flex items-center justify-center mx-auto">
+                <span class="text-3xl font-bold text-brand-primary">{{ '%.0f' % (lead_score.score * 100) }}%</span>
             </div>
         </div>
         <dl class="space-y-3 text-sm">
@@ -58,7 +58,7 @@
                     {% for c in customers %}
                     <tr class="hover:bg-gray-50">
                         <td class="px-4 py-3 font-medium">
-                            <a href="/retention/{{ c.customer_no }}" class="text-brand-teal hover:underline">{{ c.customer_no }}</a>
+                            <a href="/retention/{{ c.customer_no }}" class="text-brand-primary hover:underline">{{ c.customer_no }}</a>
                         </td>
                         <td class="px-4 py-3 text-gray-600">{{ c.customer_name or '—' }}</td>
                         <td class="px-4 py-3 text-gray-600">{{ c.sales_region or '—' }}</td>

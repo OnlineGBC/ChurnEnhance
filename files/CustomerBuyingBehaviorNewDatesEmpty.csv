@@ -4833,7 +4833,7 @@ transactiondate,product,product_GBU,yearmth,customer_no,bill_to_customer_name,Ex
 7/5/2024,Koala,CI,202301,1078784,OM Owens & Minor,,,,,20168091,90377272,Invoice,450,187.1,10,4500,4312.9
 7/5/2024,ROM,CI,202301,1078784,OM Owens & Minor,,,,,20163178,90377266,Invoice,1850,270.5,50,92500,92229.5
 7/5/2024,ROM,CI,202301,1078784,OM Owens & Minor,,,,,20163160,90377267,Invoice,925,135.25,25,23125,22989.75
-7/5/2024,ROM,CI,202301,1108492,Laborie Medical Samples - Mother & Baby,,,,,20197165,90377276,Invoice,0,135.25,25,0,-135.25
+7/5/2024,ROM,CI,202301,1108492,GBC-ai4org Demo Accounts - Consumer Apps,,,,,20197165,90377276,Invoice,0,135.25,25,0,-135.25
 7/5/2024,Traxi,CI,202301,1078784,OM Owens & Minor,,,,,20163178,90377266,Invoice,700,89.1,10,7000,6910.9
 7/6/2024,Incontinence MPQ,Uro,202301,1019313,Parkridge Surgery Center,,,,,20073834,90377299,Invoice,34,13.38,1,34,20.62
 7/6/2024,Incontinence MPQ,Uro,202301,1019313,Parkridge Surgery Center,,,,,20073834,90377299,Invoice,1122,84.12,2,2244,2159.88

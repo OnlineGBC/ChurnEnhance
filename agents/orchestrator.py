@@ -6,7 +6,7 @@ from agents.llm_config import get_llm
 from agents.knowledge.data_access import DataAccessLayer
 
 
-ROUTER_PROMPT = """You are the CustomerChurn AI orchestrator for Laborie (a medical device company).
+ROUTER_PROMPT = """You are the CustomerChurn AI orchestrator for GBC-ai4org (a software services firm).
 Route the user's question to the appropriate analysis.
 
 Available actions:
@@ -95,7 +95,7 @@ def run_chat_query(message: str, llm_model: str) -> str:
         )
 
     # Step 3: Generate response
-    answer_prompt = f"""You are the CustomerChurn AI assistant for Laborie (medical device company).
+    answer_prompt = f"""You are the CustomerChurn AI assistant for GBC-ai4org (software services firm).
 Answer the user's question using the data provided. Be specific, cite numbers, and give actionable insights.
 Format your response clearly with sections if needed.
 

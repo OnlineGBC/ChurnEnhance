@@ -1,6 +1,6 @@
 """System prompts for retention specialist agents."""
 
-CHURN_RISK_PROMPT = """You are a Churn Risk Scoring specialist for a medical device company (Laborie).
+CHURN_RISK_PROMPT = """You are a Churn Risk Scoring specialist for a software services firm (GBC-ai4org).
 You analyze customer transaction data and behavior to predict churn risk.
 
 Given customer data, assign a risk score (0.0 to 1.0) and risk level (low/medium/high).
@@ -22,10 +22,10 @@ Respond with a JSON array of objects, each with:
 - recommended_action (string)
 """
 
-DIAGNOSIS_PROMPT = """You are a Churn Diagnosis specialist for a medical device company (Laborie).
+DIAGNOSIS_PROMPT = """You are a Churn Diagnosis specialist for a software services firm (GBC-ai4org).
 You identify failure modes that explain why customers are churning.
 
-Common failure modes in medical device sales:
+Common failure modes in software services sales:
 - Product fit issues (wrong product for their needs)
 - Service quality decline
 - Competitive displacement
@@ -43,7 +43,7 @@ Given the customer data and risk scores, respond with a JSON array of objects:
 - suggested_interventions (array of strings)
 """
 
-INTERVENTION_PROMPT = """You are an Intervention Selection specialist for a medical device company (Laborie).
+INTERVENTION_PROMPT = """You are an Intervention Selection specialist for a software services firm (GBC-ai4org).
 You recommend specific actions to prevent customer churn.
 
 Available intervention types:

@@ -16,7 +16,7 @@
                 <input type="number" name="red_flag" value="{{ red_flag }}" min="1"
                        class="w-20 border border-gray-300 rounded px-2 py-1 text-sm">
             </div>
-            <button type="submit" class="bg-brand-teal text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-brand-teal-dark">
+            <button type="submit" class="bg-brand-primary text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-brand-primary-dark">
                 Apply
             </button>
         </form>
@@ -33,7 +33,7 @@
 
 <!-- Summary -->
 <div class="grid grid-cols-3 gap-4 mb-6">
-    <div class="bg-white rounded-xl card-shine border border-gray-200 border-t-4 border-t-brand-teal p-4">
+    <div class="bg-white rounded-xl card-shine border border-gray-200 border-t-4 border-t-brand-primary p-4">
         <p class="text-sm text-gray-500">Customer-Product Combinations</p>
         <p class="text-2xl font-bold text-gray-900">{{ total_count }}</p>
     </div>
@@ -79,7 +79,7 @@
                 {% for row in rows %}
                 <tr class="hover:bg-{{ 'yellow' if flag_type == 'yellow' else 'red' }}-50">
                     <td class="px-4 py-3 font-medium">
-                        <a href="/retention/{{ row.customer_no }}" class="text-brand-teal hover:underline">{{ row.customer_no }}</a>
+                        <a href="/retention/{{ row.customer_no }}" class="text-brand-primary hover:underline">{{ row.customer_no }}</a>
                     </td>
                     <td class="px-4 py-3 text-gray-600">{{ row.customer_name or '—' }}</td>
                     <td class="px-4 py-3 text-gray-600">{{ row.product or '—' }}</td>

@@ -2,7 +2,7 @@
 
 ## Overview
 
-CustomerChurn AI is a multi-agent system for Laborie Medical Technologies that predicts customer churn, diagnoses causes, recommends retention interventions, builds ideal customer profiles, and identifies market expansion opportunities.
+CustomerChurn AI is a multi-agent system for GBC-ai4org that predicts customer churn, diagnoses causes, recommends retention interventions, builds ideal customer profiles, and identifies market expansion opportunities.
 
 The system is built on **Flask + Tailwind CSS** (migrated from Streamlit v1) with **PostgreSQL** persistence and **LangGraph**-based AI agents powered by user-selectable LLMs.
 
@@ -454,7 +454,7 @@ API keys are stored in `.env` and loaded via `python-dotenv`.
 │   ├── css/tailwind.css            # Tailwind placeholder (CDN used)
 │   ├── js/app.js                   # General client-side utilities
 │   ├── js/chat.js                  # Chat UI fetch logic
-│   └── img/Laborie.png             # Company logo
+│   └── img/GBC-ai4org.jpg             # Company logo
 │
 ├── files/
 │   ├── CustomerChurn_Enriched_Master.csv  # Enriched dataset (102 cols, 26,597 rows)

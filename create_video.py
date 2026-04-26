@@ -37,7 +37,7 @@ SEGMENTS = [
     (
         "title",
         None,
-        "Welcome to CustomerChurn AI — a multi-agent system for Laborie "
+        "Welcome to CustomerChurn AI — a multi-agent system for GBC-ai4org "
         "Medical Technologies that predicts customer churn, diagnoses root "
         "causes, and identifies market expansion opportunities."
     ),
@@ -123,7 +123,7 @@ def create_title_card(filename, lines, subtitle=None):
     from PIL import Image, ImageDraw, ImageFont
 
     W, H = 1920, 1080
-    img = Image.new("RGB", (W, H), color=(74, 117, 112))  # brand-teal-deeper
+    img = Image.new("RGB", (W, H), color=(74, 117, 112))  # brand-primary-deeper
 
     draw = ImageDraw.Draw(img)
 
@@ -190,7 +190,7 @@ def capture_screenshots():
                 path = create_title_card(
                     f"{name}.png",
                     ["CustomerChurn AI", "Multi-Agent Churn Analysis"],
-                    "Laborie Medical Technologies"
+                    "GBC-ai4org"
                 )
             else:
                 path = create_title_card(

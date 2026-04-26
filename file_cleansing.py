@@ -90,7 +90,7 @@ st.markdown("""
 
 # -- Logo --------------------------------------------------------------
 # Display the company logo at the top of the web page
-st.image("Laborie.png", width=200)
+st.image("GBC-ai4org.jpg", width=200)
 
 # -- Sidebar Controls --------------------------------------------------------
 # Sidebar header

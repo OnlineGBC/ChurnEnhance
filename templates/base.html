@@ -12,11 +12,11 @@
                 extend: {
                     colors: {
                         brand: {
-                            teal: '#709f9a',
-                            'teal-dark': '#5a8a85',
-                            'teal-deeper': '#4a7570',
-                            cream: '#FAF3E0',
-                            'cream-dark': '#f0e6cc',
+                            primary: '#2563eb',
+                            'primary-dark': '#1d4ed8',
+                            'primary-deeper': '#1e3a8a',
+                            accent: '#f59e0b',
+                            'accent-dark': '#d97706',
                         }
                     }
                 }
@@ -24,13 +24,13 @@
         }
     </script>
     <style>
-        .sidebar-gradient { background: linear-gradient(180deg, #5a8a85 0%, #4a7570 100%); }
+        .sidebar-gradient { background: linear-gradient(180deg, #1e3a8a 0%, #2563eb 100%); }
         .sidebar-link { transition: all 0.2s ease; border-left: 3px solid transparent; }
         .sidebar-link:hover { background-color: rgba(255,255,255,0.12); border-left-color: rgba(255,255,255,0.4); }
-        .sidebar-link.active { background: rgba(255,255,255,0.18); border-left-color: #FAF3E0; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); }
+        .sidebar-link.active { background: rgba(255,255,255,0.18); border-left-color: #f59e0b; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); }
         .card-shine { box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04); transition: box-shadow 0.2s ease; }
         .card-shine:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04); }
-        .header-bar { background: linear-gradient(90deg, #ffffff 0%, #f8fffe 100%); }
+        .header-bar { background: linear-gradient(90deg, #ffffff 0%, #f5f8ff 100%); }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
@@ -40,7 +40,7 @@
         <aside class="w-64 sidebar-gradient text-white flex flex-col min-h-screen fixed">
             <div class="px-4 py-5 border-b border-white/20">
                 <a href="/" class="flex items-center gap-3">
-                    <img src="{{ url_for('static', filename='img/Laborie.png') }}" alt="Laborie" class="h-9">
+                    <img src="{{ url_for('static', filename='img/GBC-ai4org.jpg') }}" alt="GBC-ai4org" class="h-9">
                     <span class="font-bold text-base whitespace-nowrap tracking-tight">CustomerChurn AI</span>
                 </a>
             </div>
@@ -79,7 +79,7 @@
                 </a>
             </nav>
             <div class="p-4 border-t border-white/20">
-                <span class="text-sm font-medium text-white/70">Multi-Agent Churn/Access System</span>
+                <span class="text-sm font-medium text-white/70">Agentic Retention & Growth Platform</span>
             </div>
         </aside>
 
@@ -93,7 +93,7 @@
                         <form method="POST" action="/set-llm" class="flex items-center gap-2">
                             <label class="text-sm text-gray-600 font-medium">LLM Model:</label>
                             <select name="llm_model" onchange="this.form.submit()"
-                                    class="text-sm border border-gray-300 rounded-lg px-3 py-1.5 bg-white focus:ring-2 focus:ring-brand-teal focus:border-brand-teal">
+                                    class="text-sm border border-gray-300 rounded-lg px-3 py-1.5 bg-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
                                 {% for key, model in config.LLM_CHOICES.items() %}
                                 <option value="{{ key }}" {% if session.get('llm_model', config.DEFAULT_LLM) == key %}selected{% endif %}>
                                     {{ model.label }}

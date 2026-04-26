@@ -16,7 +16,7 @@
                 <input type="number" name="red_flag" value="{{ red_flag }}" min="1"
                        class="w-20 border border-gray-300 rounded px-2 py-1 text-sm">
             </div>
-            <button type="submit" class="bg-brand-teal text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-brand-teal-dark">
+            <button type="submit" class="bg-brand-primary text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-brand-primary-dark">
                 Apply
             </button>
         </form>
@@ -33,7 +33,7 @@
 
 <!-- Summary Cards -->
 <div class="grid grid-cols-3 gap-4 mb-6">
-    <div class="bg-white rounded-xl card-shine border border-gray-200 border-t-4 border-t-brand-teal p-4">
+    <div class="bg-white rounded-xl card-shine border border-gray-200 border-t-4 border-t-brand-primary p-4">
         <p class="text-sm text-gray-500">Total Customers</p>
         <p class="text-2xl font-bold text-gray-900">{{ total_count }}</p>
     </div>
@@ -81,7 +81,7 @@
                 {% for row in yellow_flags %}
                 <tr class="hover:bg-yellow-50">
                     <td class="px-4 py-3 font-medium">
-                        <a href="/retention/{{ row.customer_no }}" class="text-brand-teal hover:underline">{{ row.customer_no }}</a>
+                        <a href="/retention/{{ row.customer_no }}" class="text-brand-primary hover:underline">{{ row.customer_no }}</a>
                     </td>
                     <td class="px-4 py-3 text-gray-600">{{ row.customer_name or '—' }}</td>
                     <td class="px-4 py-3 text-gray-600">{{ row.sales_region or '—' }}</td>
@@ -111,7 +111,7 @@
                 {% for row in red_flags %}
                 <tr class="hover:bg-red-50">
                     <td class="px-4 py-3 font-medium">
-                        <a href="/retention/{{ row.customer_no }}" class="text-brand-teal hover:underline">{{ row.customer_no }}</a>
+                        <a href="/retention/{{ row.customer_no }}" class="text-brand-primary hover:underline">{{ row.customer_no }}</a>
                     </td>
                     <td class="px-4 py-3 text-gray-600">{{ row.customer_name or '—' }}</td>
                     <td class="px-4 py-3 text-gray-600">{{ row.sales_region or '—' }}</td>
@@ -142,7 +142,7 @@
                 {% for row in all_customers %}
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-3 font-medium">
-                        <a href="/retention/{{ row.customer_no }}" class="text-brand-teal hover:underline">{{ row.customer_no }}</a>
+                        <a href="/retention/{{ row.customer_no }}" class="text-brand-primary hover:underline">{{ row.customer_no }}</a>
                     </td>
                     <td class="px-4 py-3 text-gray-600">{{ row.customer_name or '—' }}</td>
                     <td class="px-4 py-3 text-gray-600">{{ row.sales_region or '—' }}</td>
@@ -168,7 +168,7 @@
 function showTab(name) {
     ['yellow', 'red', 'all'].forEach(t => {
         document.getElementById('panel-' + t).classList.add('hidden');
-        document.getElementById('tab-' + t).classList.remove('border-yellow-500', 'text-yellow-600', 'border-red-500', 'text-red-600', 'border-brand-teal', 'text-brand-teal');
+        document.getElementById('tab-' + t).classList.remove('border-yellow-500', 'text-yellow-600', 'border-red-500', 'text-red-600', 'border-brand-primary', 'text-brand-primary');
         document.getElementById('tab-' + t).classList.add('border-transparent', 'text-gray-500');
     });
     document.getElementById('panel-' + name).classList.remove('hidden');
@@ -176,7 +176,7 @@ function showTab(name) {
     tab.classList.remove('border-transparent', 'text-gray-500');
     if (name === 'yellow') { tab.classList.add('border-yellow-500', 'text-yellow-600'); }
     else if (name === 'red') { tab.classList.add('border-red-500', 'text-red-600'); }
-    else { tab.classList.add('border-brand-teal', 'text-brand-teal'); }
+    else { tab.classList.add('border-brand-primary', 'text-brand-primary'); }
 }
 </script>
 {% endblock %}
