@@ -49,17 +49,30 @@ def upload():
 
         try:
             df = pd.read_csv(file, low_memory=False)
-            from services.data_loader import load_uploaded_csv
-            df_full, df_not_found, df_valid, df_valid_cust_prod = load_uploaded_csv(df)
 
-            # Store in session for download
-            session["upload_not_found"] = df_not_found.to_csv(index=False)
-
-            results = {
-                "valid_count": len(df_valid),
-                "not_found_count": len(df_not_found),
-            }
-            flash(f"Processed {len(df_full)} rows: {len(df_valid)} valid, {len(df_not_found)} not found.", "success")
+            # Detect file type: enriched CSV vs raw CSV
+            if "bill_to_customer_name" in df.columns:
+                # Raw CSV — run through cleaning pipeline
+                from services.data_loader import load_uploaded_csv
+                df_full, df_not_found, df_valid, df_valid_cust_prod = load_uploaded_csv(df)
+                session["upload_not_found"] = df_not_found.to_csv(index=False)
+                results = {
+                    "valid_count": len(df_valid),
+                    "not_found_count": len(df_not_found),
+                }
+                flash(f"Processed {len(df_full)} rows: {len(df_valid)} valid, {len(df_not_found)} not found.", "success")
+            else:
+                # Enriched CSV — load directly into PostgreSQL
+                from services.data_loader import load_enriched_csv
+                filepath = os.path.join(Config.UPLOAD_FOLDER, file.filename)
+                file.seek(0)
+                df.to_csv(filepath, index=False)
+                cust_count, txn_count = load_enriched_csv(filepath)
+                results = {
+                    "valid_count": cust_count,
+                    "not_found_count": 0,
+                }
+                flash(f"Loaded enriched dataset: {cust_count} customers and {txn_count} transactions.", "success")
         except Exception as e:
             flash(f"Error processing file: {str(e)}", "error")
 
