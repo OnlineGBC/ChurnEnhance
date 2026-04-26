@@ -1,4 +1,4 @@
-# CustomerChurn AI — Multi-Agent System
+# CustomerChurn AI — Multi-Agent Churn/Access System
 
 ## Overview
 
@@ -13,7 +13,7 @@ The system is built on **Flask + Tailwind CSS** (migrated from Streamlit v1) wit
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    Flask Web App                         │
-│                  (port 8513)                             │
+│                  (port 8503)                             │
 │  ┌─────────┐ ┌───────────┐ ┌───────────┐ ┌──────────┐ │
 │  │Dashboard│ │Sales/Prod │ │Retention  │ │Market    │  │
 │  │  Index  │ │  Flags    │ │ Dashboard │ │Access    │  │
@@ -65,7 +65,7 @@ The system is built on **Flask + Tailwind CSS** (migrated from Streamlit v1) wit
 | Component | Technology | Details |
 |-----------|-----------|---------|
 | Web Framework | Flask 3.x | App factory pattern, 6 blueprints |
-| UI Styling | Tailwind CSS (CDN) | Brand colors: teal #709f9a, cream #FAF3E0 |
+| UI Styling | Tailwind CSS (CDN) | Gradient sidebar, card-shine hover effects, colored top borders, brand teal #709f9a |
 | Interactivity | HTMX + Fetch API | Partial page updates, chat streaming |
 | Database | PostgreSQL 14 | Local on VM, 9 tables |
 | ORM | SQLAlchemy 2.x | Declarative models, session management |
@@ -73,6 +73,21 @@ The system is built on **Flask + Tailwind CSS** (migrated from Streamlit v1) wit
 | LLM Providers | OpenAI + Anthropic | User-selectable at runtime |
 | Validation | Pydantic 2.x | Agent I/O schemas |
 | Config | python-dotenv | API keys + DB config from .env |
+
+---
+
+## UI Design
+
+The interface uses a polished design with the following visual elements:
+
+- **Sidebar**: Gradient background (teal-dark → teal-deeper) with hover/active indicators using left border accents
+- **Dashboard cards**: Colored top borders (teal for totals, red for red flags, amber for yellow flags, indigo for agent runs) with hover shadow transitions
+- **Card-shine effect**: All panels use a custom `card-shine` class that adds subtle hover shadow elevation
+- **Header bar**: Subtle gradient from white to off-white with green tint
+- **Retention dashboard**: Unified full-width churn scores table with inline customer names, diagnoses, and confidence columns (no separate diagnoses panel)
+- **Intervention queue**: Includes customer names alongside customer numbers
+- **Color-coded badges**: Risk levels, flag status, and priorities use consistent semantic colors throughout
+- **System branding**: "Multi-Agent Churn/Access System" in sidebar footer
 
 ---
 
@@ -90,7 +105,7 @@ Users select the LLM model from a dropdown in the top navigation bar. The select
 
 **LLM Parameters:**
 - Temperature: 0.1
-- Max Tokens: 4096
+- Max Tokens: 16384
 
 API keys are stored in `.env` and loaded via `python-dotenv`.
 
@@ -247,7 +262,7 @@ API keys are stored in `.env` and loaded via `python-dotenv`.
 ```
 /home/azureuser/CustomerChurn/
 │
-├── app.py                          # Flask entry point (port 8513)
+├── app.py                          # Flask entry point (port 8503)
 ├── wsgi.py                         # WSGI entry for gunicorn
 ├── requirements.txt                # Python dependencies
 ├── .env                            # API keys + DB config (gitignored)
@@ -319,7 +334,7 @@ API keys are stored in `.env` and loaded via `python-dotenv`.
 │   ├── product_flags.html          # Product inactivity flags
 │   ├── chat.html                   # Agent chat interface
 │   ├── retention/
-│   │   ├── dashboard.html          # Churn scores, diagnoses, interventions
+│   │   ├── dashboard.html          # Churn scores (inline diagnosis + customer names), interventions
 │   │   └── customer_detail.html    # Single customer deep-dive
 │   └── market_access/
 │       ├── dashboard.html          # ICP profiles, segment scores
@@ -358,7 +373,7 @@ API keys are stored in `.env` and loaded via `python-dotenv`.
 | GET | `/flags/sales/download/<type>` | flags | Download flagged customers CSV |
 | GET/POST | `/flags/product` | flags | Product-level inactivity flags |
 | GET | `/flags/product/download/<type>` | flags | Download product flag CSV |
-| GET | `/retention/` | retention | Churn scores, diagnoses, interventions |
+| GET | `/retention/` | retention | Churn scores (with inline diagnosis + customer names), interventions |
 | GET | `/retention/<customer_no>` | retention | Customer deep-dive |
 | GET | `/market-access/` | market_access | ICP profiles, segment scores |
 | GET | `/market-access/<segment>` | market_access | Segment deep-dive |
@@ -504,13 +519,13 @@ python -m services.data_loader
 
 ```bash
 python app.py
-# Runs on http://localhost:8513
+# Runs on http://localhost:8503
 ```
 
 ### Production (gunicorn)
 
 ```bash
-gunicorn wsgi:app -b 0.0.0.0:8513
+gunicorn wsgi:app -b 0.0.0.0:8503
 ```
 
 ---
@@ -519,7 +534,7 @@ gunicorn wsgi:app -b 0.0.0.0:8513
 
 - SQL pre-filtering reduces 2,135 customers to top 50 before LLM calls
 - LLM temperature set to 0.1 for deterministic, concise outputs
-- Max tokens capped at 4,096 per call
+- Max tokens capped at 16,384 per call
 - Agent runs logged in `agent_runs` table with token counts
 - Constrained outputs: LLM selects from fixed intervention types and priority levels
 
@@ -536,7 +551,7 @@ gunicorn wsgi:app -b 0.0.0.0:8513
 
 1. PostgreSQL tables exist (9 tables) — `\dt` in psql
 2. Data loaded: 2,135 customers, 26,597 transactions
-3. Flask app starts on port 8513 — all pages render with Tailwind
+3. Flask app starts on port 8503 — all pages render with Tailwind
 4. Upload CSV via `/upload` — cleaning + flag logic works
 5. Sales Flags (`/flags/sales`) — yellow/red thresholds applied correctly
 6. Product Flags (`/flags/product`) — customer-product level flags
