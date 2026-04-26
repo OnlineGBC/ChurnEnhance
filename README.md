@@ -8,6 +8,116 @@ The system is built on **Flask + Tailwind CSS** (migrated from Streamlit v1) wit
 
 ---
 
+## Why Multi-Agent — Not Just AI
+
+A common question: *"Isn't this just an app that calls an AI model?"* No. Here's the difference, and why it matters.
+
+### What "Just AI" Looks Like
+
+A typical AI application makes a single call to a language model: you give it data, it gives you an answer. One prompt in, one response out. No memory, no multi-step reasoning, no coordination between components. Think of asking ChatGPT a question — that's "just AI."
+
+### What Makes an Agent Different
+
+An **agent** is an AI system that:
+
+1. **Receives a goal**, not just a question
+2. **Decides what steps to take** to achieve that goal
+3. **Uses tools** to interact with the outside world (databases, APIs, files)
+4. **Observes the results** of its actions
+5. **Decides what to do next** based on those results
+
+The simplest way to put it: **a regular LLM is a brain in a jar. An agent is a brain with hands.** It can reach out, grab information, do things, and adjust its approach based on what happens.
+
+### How CustomerChurn AI Is Agentic
+
+#### 1. Multiple Specialized Agents Working as a Team ("Crews")
+
+Instead of one AI doing everything, there are **two crews** of agents, each with a specific job:
+
+- **Retention Specialist Crew** — Figures out which customers are leaving and what to do about it
+- **Market Access Crew** — Finds new growth opportunities to replace lost revenue
+
+Think of it like departments in a company. Sales and Marketing are separate teams, but they share information with each other.
+
+#### 2. Multi-Step Reasoning Pipelines
+
+Each crew runs a **chain of steps** where each step's output feeds into the next. This is fundamentally different from a single AI call.
+
+**Retention Crew — 3-Step Reasoning Chain:**
+
+| Step | What It Does | Human Analogy |
+|------|-------------|---------------|
+| **Churn Risk Scoring** | Examines 50 customers' data and assigns each a 0–1 risk score with contributing factors | A doctor reading lab results |
+| **Diagnosis** | Takes the high-risk scores and determines *why* — product fit? pricing? service quality? competitive displacement? | The doctor diagnosing the disease |
+| **Intervention Selection** | Based on the diagnosis, picks the right action — sales outreach? executive engagement? loyalty program? Assigns it to the right team member | The doctor writing a prescription |
+
+Each step is a separate LLM call that **reasons about the previous step's output**. Step 3 cannot happen without Step 2, which cannot happen without Step 1. That sequential reasoning chain is what makes it agentic — the AI is "thinking through" a problem in stages, not just answering once.
+
+**Market Access Crew — 5-Step Reasoning Chain:**
+
+| Step | What It Does |
+|------|-------------|
+| **Market Intelligence** | Analyzes revenue concentration, under-penetrated regions, and product gaps |
+| **ICP Profile Building** | Builds Ideal Customer Profiles, actively *excluding* patterns from churned customers |
+| **Lead Scoring** | Scores each market segment for expansion opportunity (0–1) with recommended sales channels |
+| **Revenue Modeling** | Projects 12-month revenue by segment with retention-rate adjustments |
+| **Campaign Planning** | Designs outreach strategies with territory assignments and ROI estimates |
+
+#### 3. Cross-Crew Feedback Loops
+
+This is the most agentic part of the system. **The two crews communicate with each other:**
+
+- **Retention → Market Access**: "Here are the patterns of customers who churned (industry, size, region)." The Market Access crew then uses this to **exclude** those bad patterns when building Ideal Customer Profiles. It learns from the other crew's findings.
+
+- **Market Access → Retention**: "Here are our top-performing segments and their revenue benchmarks." The Retention crew uses this to prioritize which at-risk customers are most worth saving.
+
+This is like two departments in a company having a weekly sync meeting — each team adjusts its strategy based on what the other learned. The feedback is stored persistently and used in subsequent runs.
+
+#### 4. An Orchestrator That Routes Decisions
+
+The Chat interface does not just call one AI model. It has a **router agent** that:
+
+1. Reads your natural language question
+2. **Decides** which action to take — is this about a specific customer? churn risk? market opportunities? a general overview?
+3. Extracts relevant parameters (customer numbers, segment names) from your question
+4. Pulls the right data from PostgreSQL based on that decision
+5. Generates a contextual answer using that data
+
+The router is making a **judgment call** about intent and routing — that's agency, not just text generation.
+
+#### 5. Tool Use — Agents That Take Actions
+
+The agents have **tools** — functions they can call to interact with the real world:
+
+| Tool | What It Does |
+|------|-------------|
+| `get_high_risk_customers()` | Queries PostgreSQL for customers sorted by inactivity |
+| `get_customer_detail()` | Pulls a customer's full profile with transaction summary |
+| `get_region_performance()` | Aggregates regional metrics including churn counts |
+| `get_churned_archetypes()` | Finds patterns in lost customers for ICP exclusion |
+| `get_revenue_by_segment()` | Aggregates revenue data by industry segment |
+| `get_product_performance()` | Analyzes product-level sales metrics |
+
+An agent with tools is fundamentally different from a bare language model. It can **take actions** to gather information it needs, not just process what you hand it.
+
+#### 6. Persistent Memory Across Runs
+
+Every agent output — risk scores, diagnoses, interventions, ICP profiles, lead scores, feedback insights — gets **saved to PostgreSQL**. When crews run again or a user asks a chat question, the system builds on previous results. It has institutional memory, not just session context.
+
+### Summary: AI vs. Multi-Agent
+
+| Trait | Just AI | CustomerChurn AI (Multi-Agent) |
+|-------|---------|-------------------------------|
+| **Steps** | One question → one answer | Multi-step pipelines: Score → Diagnose → Intervene |
+| **Agents** | One model | Two specialized crews + a routing orchestrator |
+| **Communication** | None | Crews send feedback to each other bidirectionally |
+| **Tools** | None | Agents query databases, pull customer data, aggregate metrics |
+| **Decisions** | User decides what to ask | Router agent decides which crew/action to invoke |
+| **Memory** | Stateless per call | All outputs persist in PostgreSQL across runs |
+| **Reasoning** | Single inference | Sequential multi-step reasoning chains (3–5 steps per crew) |
+
+---
+
 ## Architecture
 
 ```
