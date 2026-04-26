@@ -34,6 +34,30 @@
         </form>
     </div>
 
+    <!-- Load from Server Path -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+        <h2 class="text-lg font-semibold text-gray-800 mb-2">Load from Server</h2>
+        <p class="text-sm text-gray-500 mb-4">Select a CSV file from the server's <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs">files/</code> directory to load into the database.</p>
+        <form method="POST" action="/load-server-file" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Available Files</label>
+                <select name="server_file" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-teal focus:border-brand-teal">
+                    {% for f in server_files %}
+                    <option value="{{ f.name }}" {% if 'Enriched' in f.name %}selected{% endif %}>
+                        {{ f.name }} ({{ f.size }})
+                    </option>
+                    {% endfor %}
+                    {% if not server_files %}
+                    <option disabled>No CSV files found in files/</option>
+                    {% endif %}
+                </select>
+            </div>
+            <button type="submit" class="bg-gray-600 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors">
+                Load Selected File
+            </button>
+        </form>
+    </div>
+
     <!-- Reload enriched data -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <h2 class="text-lg font-semibold text-gray-800 mb-2">Reload Enriched Master Dataset</h2>

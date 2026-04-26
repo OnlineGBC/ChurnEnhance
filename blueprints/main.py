@@ -76,7 +76,47 @@ def upload():
         except Exception as e:
             flash(f"Error processing file: {str(e)}", "error")
 
-    return render_template("upload.html", results=results, config=Config)
+    server_files = _get_server_files()
+    return render_template("upload.html", results=results, config=Config, server_files=server_files)
+
+
+def _get_server_files():
+    """List CSV/XLSX files in the files/ directory."""
+    files_dir = "files"
+    server_files = []
+    if os.path.isdir(files_dir):
+        for f in sorted(os.listdir(files_dir)):
+            if f.lower().endswith((".csv", ".xlsx")):
+                filepath = os.path.join(files_dir, f)
+                size_bytes = os.path.getsize(filepath)
+                if size_bytes >= 1024 * 1024:
+                    size_str = f"{size_bytes / (1024 * 1024):.1f} MB"
+                else:
+                    size_str = f"{size_bytes / 1024:.0f} KB"
+                server_files.append({"name": f, "size": size_str, "path": filepath})
+    return server_files
+
+
+@main_bp.route("/load-server-file", methods=["POST"])
+def load_server_file():
+    filename = request.form.get("server_file", "")
+    if not filename:
+        flash("No file selected.", "error")
+        return redirect(url_for("main.upload"))
+
+    # Sanitize: only allow files from the files/ directory
+    filepath = os.path.join("files", os.path.basename(filename))
+    if not os.path.isfile(filepath):
+        flash(f"File not found: {filename}", "error")
+        return redirect(url_for("main.upload"))
+
+    try:
+        from services.data_loader import load_enriched_csv
+        cust_count, txn_count = load_enriched_csv(filepath)
+        flash(f"Loaded {filename}: {cust_count} customers and {txn_count} transactions.", "success")
+    except Exception as e:
+        flash(f"Error loading {filename}: {str(e)}", "error")
+    return redirect(url_for("main.upload"))
 
 
 @main_bp.route("/reload-enriched", methods=["POST"])
