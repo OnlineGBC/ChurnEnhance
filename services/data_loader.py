@@ -65,8 +65,11 @@ def load_enriched_csv(csv_path: str = "files/CustomerChurn_Enriched_Master.csv")
     )
     df_txn["customer_no"] = df_txn["customer_no"].astype(str)
 
-    # Clear existing data and load
+    # Clear existing data in FK-safe order (agent outputs reference customers).
     with engine.begin() as conn:
+        conn.execute(text("DELETE FROM interventions"))
+        conn.execute(text("DELETE FROM diagnoses"))
+        conn.execute(text("DELETE FROM churn_scores"))
         conn.execute(text("DELETE FROM transactions"))
         conn.execute(text("DELETE FROM customers"))
 
